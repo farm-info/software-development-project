@@ -1,4 +1,4 @@
-import algorithms.tfidf as tfidf
+import tfidf
 
 
 # put your datasets in /algorithms/datasets/ so that git will ignore them

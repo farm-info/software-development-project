@@ -1,8 +1,8 @@
-import algorithms.tfidf as tfidf
+import tfidf
 
 
 # put your datasets in /algorithms/datasets/ so that git will ignore them
-dataset = tfidf.load_dataset("dataset/recipe_nlg_lite/train.csv", "	")
+dataset = tfidf.load_dataset("algorithms/datasets/recipe_nlg_lite/train.csv", "	")
 similarity, indices = tfidf.process_data(dataset)
 
 
@@ -14,4 +14,4 @@ a = tfidf.get_recommendations(
     num_recommend=30,
 )
 
-a.to_csv("results/combined_cosine_altstopword.csv")
+a.to_csv("algorithms/results/combined_cosine_altstopword.csv")

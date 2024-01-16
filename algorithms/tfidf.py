@@ -21,13 +21,12 @@ def process_data(
     similarity_function: str = "cosine",
 ):
     if remove_numbers:
-        # pylint: disable=unnecessary-lambda
         preprocessor = lambda tokens: re.sub("(\\d)+", "NUM", tokens.lower())
     else:
         preprocessor = None
 
     if use_alt_stopwords:
-        with open("stopwords.txt", "r", encoding="utf-8") as file:
+        with open("algorithms/stopwords.txt", "r", encoding="utf-8") as file:
             stop_words = file.read().splitlines()
     else:
         stop_words = "english"
@@ -51,7 +50,10 @@ def process_data(
 
 
 def get_recommendations(uid, dataset, similarity, indices, num_recommend=10):
-    idx = indices[uid]
+    try:
+        idx = indices[uid]
+    except KeyError as e:
+        raise ValueError("Invalid uid") from e
     sim_scores = list(enumerate(similarity[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     top_similar = sim_scores[1 : num_recommend + 1]

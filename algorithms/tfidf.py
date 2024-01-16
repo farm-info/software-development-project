@@ -5,13 +5,6 @@ from sklearn.metrics.pairwise import linear_kernel
 from sklearn.metrics.pairwise import cosine_similarity
 
 
-def remove_number_preprocessor(tokens):
-    r = re.sub("(\\d)+", "NUM", tokens.lower())
-    # This alternative just removes numbers:
-    # r = re.sub('(\d)+', '', tokens.lower())
-    return r
-
-
 # load dataset
 def load_dataset(dataset_path, sep):
     dataset = pd.read_csv(dataset_path, sep=sep)
@@ -27,9 +20,9 @@ def process_data(
     use_alt_stopwords: bool = False,
     similarity_function: str = "cosine",
 ):
-    # vectorize
     if remove_numbers:
-        preprocessor = remove_number_preprocessor
+        # pylint: disable=unnecessary-lambda
+        preprocessor = lambda tokens: re.sub("(\\d)+", "NUM", tokens.lower())
     else:
         preprocessor = None
 
@@ -39,6 +32,7 @@ def process_data(
     else:
         stop_words = "english"
 
+    # vectorize
     tfidf_desc = TfidfVectorizer(stop_words=stop_words, preprocessor=preprocessor)
     tfidf_desc_matrix = tfidf_desc.fit_transform(dataset["combined"])
 
@@ -58,12 +52,8 @@ def process_data(
 
 def get_recommendations(uid, dataset, similarity, indices, num_recommend=10):
     idx = indices[uid]
-    sim_scores = list(
-        enumerate(similarity[idx])
-    )  # Sort the movies based on the similarity scores
-    sim_scores = sorted(
-        sim_scores, key=lambda x: x[1], reverse=True
-    )  # Get the scores of the 10 most similar movies
-    top_similar = sim_scores[1 : num_recommend + 1]  # Get the movie indices
+    sim_scores = list(enumerate(similarity[idx]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    top_similar = sim_scores[1 : num_recommend + 1]
     recipe_indices = [i[0] for i in top_similar]
     return dataset.loc[recipe_indices]

@@ -32,14 +32,14 @@ def process_data(
         stop_words = "english"
 
     # vectorize
-    tfidf_desc = TfidfVectorizer(stop_words=stop_words, preprocessor=preprocessor)
-    tfidf_desc_matrix = tfidf_desc.fit_transform(dataset["combined"])
+    tfidf_vector = TfidfVectorizer(stop_words=stop_words, preprocessor=preprocessor)
+    tfidf_matrix = tfidf_vector.fit_transform(dataset["combined"])
 
     # calculate similarity
     if similarity_function == "cosine":
-        similarity = linear_kernel(tfidf_desc_matrix, tfidf_desc_matrix)
+        similarity = linear_kernel(tfidf_matrix, tfidf_matrix)
     elif similarity_function == "linear":
-        similarity = cosine_similarity(tfidf_desc_matrix, tfidf_desc_matrix)
+        similarity = cosine_similarity(tfidf_matrix, tfidf_matrix)
     else:
         raise ValueError("similarity_function must be 'cosine' or 'linear'")
 
@@ -55,6 +55,25 @@ def get_recommendations(uid, dataset, similarity, indices, num_recommend=10):
     except KeyError as e:
         raise ValueError("Invalid uid") from e
     sim_scores = list(enumerate(similarity[idx]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    top_similar = sim_scores[1 : num_recommend + 1]
+    recipe_indices = [i[0] for i in top_similar]
+    return dataset.loc[recipe_indices]
+
+
+def search_recipes(query, dataset, similarity, num_recommend=10):
+    query = query.lower()
+    query = re.sub("(\\d)+", "NUM", query)
+    query = re.sub("[^a-z0-9 ]", "", query)
+    query = re.sub(" +", " ", query)
+
+    tfidf_vector = TfidfVectorizer(stop_words="english")
+    tfidf_matrix = tfidf_vector.fit_transform(dataset["combined"])
+    query_vector = tfidf_vector.transform([query])
+
+    similarity = linear_kernel(query_vector, tfidf_matrix)
+
+    sim_scores = list(enumerate(similarity[0]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     top_similar = sim_scores[1 : num_recommend + 1]
     recipe_indices = [i[0] for i in top_similar]

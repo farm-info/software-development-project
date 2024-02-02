@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+    upload recipe
+{% endblock title %}
+
+{% block content %}
+
+    <h1>Upload Recipe</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+
+{% endblock content %}

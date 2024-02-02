@@ -162,6 +162,9 @@ cython_debug/
 # VSCode
 .vscode/
 
-# algorithms
+# algorithm dataset and results
 algorithms/datasets/
 algorithms/results/
+
+# media
+recipeapp/media/

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodManJones?</title>
+</head>
+
+<body>
+    <!-- nav bar -->
+    <nav>
+        <ul>
+            <li>FoodManJones?</li>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'register' %}">Register</a></li>
+        </ul>
+    </nav>
+
+    <!-- content -->
+    {% block content %}
+    {% endblock %}
+</body>
+
+</html>

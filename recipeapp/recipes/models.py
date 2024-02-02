@@ -8,9 +8,8 @@ class Recipes(models.Model):
     is_imported_recipe = models.BooleanField(default=False)
     photo = models.ImageField(upload_to="media/photos/", null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    ingredients = models.TextField(null=True, blank=True)
-    comment_count = models.IntegerField(default=0)
-    like_count = models.IntegerField(default=0)
+    ingredients = models.TextField()
+    steps = models.TextField()
 
     class Meta:
         constraints = [

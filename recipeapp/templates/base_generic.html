@@ -7,32 +7,33 @@
             {% block title %}
             {% endblock title %}
         | FoodManJones</title>
+    </head>
 
-        <body>
-            <!-- nav bar -->
-            <nav>
-                <ul>
-                    <li>FoodManJones?</li>
-                    <li>
-                        <a href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'login' %}">Login</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'register' %}">Register</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'upload_recipe' %}">Upload a new recipe</a>
-                    </li>
-                </ul>
-            </nav>
+    <body>
+        <!-- nav bar -->
+        <nav>
+            <ul>
+                <li>FoodManJones?</li>
+                <li>
+                    <a href="{% url 'home' %}">Home</a>
+                </li>
+                <li>
+                    <a href="{% url 'login' %}">Login</a>
+                </li>
+                <li>
+                    <a href="{% url 'register' %}">Register</a>
+                </li>
+                <li>
+                    <a href="{% url 'upload_recipe' %}">Upload a new recipe</a>
+                </li>
+            </ul>
+        </nav>
 
-            {% comment %} TODO find a way to workaround this {% endcomment %}
-            {% comment %} <h1>{{ title }}</h1> {% endcomment %}
-            <!-- content -->
-            {% block content %}
-            {% endblock content %}
-        </body>
+        {% comment %} TODO find a way to workaround this {% endcomment %}
+        {% comment %} <h1>{{ title }}</h1> {% endcomment %}
+        <!-- content -->
+        {% block content %}
+        {% endblock content %}
+    </body>
 
-    </html>
+</html>

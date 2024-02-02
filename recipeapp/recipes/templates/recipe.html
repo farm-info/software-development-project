@@ -11,7 +11,11 @@
     <div class="post">
         <h2>{{ recipe.title }}</h2>
         <h3>By {{ recipe.author }}</h3>
-        <img src="{{ recipe.photo.url }}" alt="{{ recipe.title }}">
+        <img src="{{ recipe.photo.url }}"
+             alt="{{ recipe.title }}"
+             width="300"
+             height="200"
+             style="object-fit: cover">
         <p>{{ recipe.description }}</p>
         <p>Ingredients: {{ recipe.ingredients }}</p>
         <p>Comments: {{ recipe.comments.all.count }}</p>

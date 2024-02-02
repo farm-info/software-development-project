@@ -6,6 +6,7 @@ class Recipes(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     is_imported_recipe = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
     photo = models.ImageField(upload_to="media/photos/", null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     ingredients = models.TextField()

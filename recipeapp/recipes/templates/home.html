@@ -6,11 +6,11 @@
 
 {% block content %}
 
-    <h2>FoodManJones?</h2>
-
     {% for recipe in recipes %}
         <div class="post">
-            <h2>{{ recipe.title }}</h2>
+            <h2>
+                <a href="{% url 'recipe' recipe.id %}">{{ recipe.title }}</a>
+            </h2>
             <h3>By {{ recipe.author }}</h3>
             <img src="{{ recipe.photo.url }}"
                  alt="{{ recipe.title }}"

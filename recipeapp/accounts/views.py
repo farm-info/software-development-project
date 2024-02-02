@@ -30,5 +30,6 @@ def register_view(request):
         form = UserCreationForm()
     return render(request, "register.html", {"form": form})
 
+
 def success(request):
     return render(request, "success.html")

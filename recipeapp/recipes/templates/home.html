@@ -1,15 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base_generic.html' %}
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
+<h2>FoodManJones?</h2>
 
-<body>
-    <h2>Home</h2>
+{% for post in posts %}
+<div class="post">
+    <h2>{{ post.title }}</h2>
+    <h3>By {{ post.author }}</h3>
+    <img src="{{ post.photo.url }}" alt="{{ post.title }}">
+    <p>{{ post.description }}</p>
+    <p>Ingredients: {{ post.ingredients }}</p>
+    <p>Comments: {{ post.comment_count }}</p>
+    <button class="like-button">Like</button>
+    <p>Likes: {{ post.like_count }}</p>
+</div>
+{% empty %}
+<p>No posts yet.</p>
+{% endfor %}
 
-</body>
-
-</html>
+{% endblock %}

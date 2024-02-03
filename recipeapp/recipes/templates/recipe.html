@@ -6,21 +6,31 @@
 
 {% block content %}
 
-    <div class="post">
-        <h2>{{ recipe.title }}</h2>
+    <article class="recipe">
+        <h2>
+            <a href="{% url 'recipe' recipe.id %}">{{ recipe.title }}</a>
+        </h2>
         <h3>By {{ recipe.author }}</h3>
         <img src="{{ recipe.photo.url }}"
              alt="{{ recipe.title }}"
              width="300"
-             height="200"
-             style="object-fit: cover">
+             height="200">
         <p>{{ recipe.description }}</p>
         <p>Ingredients: {{ recipe.ingredients }}</p>
         <p>Steps: {{ recipe.steps }}</p>
         <p>Comments: {{ recipe.comments.all.count }}</p>
-        <button class="like-button">Like</button>
-        <p>Likes: {{ recipe.likes.all.count }}</p>
-    </div>
+
+        <form action="{% url 'like_recipe' %}" method="post" hx-boost="true">
+            {% csrf_token %}
+            <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+            {% if recipe.has_liked %}
+                <button class="like-button">Unlike</button>
+            {% else %}
+                <button class="like-button">Like</button>
+            {% endif %}
+            <span>{{ recipe.likes.all.count }}</span>
+        </form>
+    </article>
 
     {% comment %} not sure if this works {% endcomment %}
     {% for comment in recipe.comments.all %}

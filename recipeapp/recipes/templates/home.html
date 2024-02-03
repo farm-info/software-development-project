@@ -22,9 +22,19 @@
             <p>Steps: {{ recipe.steps }}</p>
             <p>Comments: {{ recipe.comments.all.count }}</p>
             {% comment %} TODO like button {% endcomment %}
-            <button class="like-button">Like</button>
-            <p>Likes: {{ recipe.likes.all.count }}</p>
+
+            <form action="{% url 'like_recipe' %}" method="post" hx-boost="true">
+                {% csrf_token %}
+                <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+                {% if recipe.has_liked %}
+                    <button class="like-button">Unlike</button>
+                {% else %}
+                    <button class="like-button">Like</button>
+                {% endif %}
+                <span>{{ recipe.likes.all.count }}</span>
+            </form>
         </div>
+
     {% empty %}
         <p>No posts yet.</p>
     {% endfor %}

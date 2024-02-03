@@ -1,13 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Recipes, Comments
+from django.db.models import Exists, OuterRef
+from .models import Recipes, Likes, Comments
 from .forms import RecipeForm
 
 
 def home(request):
     # TODO actual algorithm
     # placeholder
-    recipes = Recipes.objects.all()
+    likes = Likes.objects.filter(user=request.user, recipe=OuterRef("pk"))
+    recipes = Recipes.objects.all().annotate(has_liked=Exists(likes))
     return render(request, "home.html", {"recipes": recipes})
 
 
@@ -21,6 +23,17 @@ def search(request):
 def recipe(request, id):
     recipe = get_object_or_404(Recipes, pk=id)
     return render(request, "recipe.html", {"recipe": recipe})
+
+
+@login_required
+def like_recipe(request):
+    recipe_id = request.POST.get("recipe_id")
+    recipe = Recipes.objects.get(id=recipe_id)
+    user = request.user
+    like, created = Likes.objects.get_or_create(user=user, recipe=recipe)
+    if not created:
+        like.delete()
+    return redirect(request.META.get("HTTP_REFERER", "home"))
 
 
 # just pasted some ai generated stuff, not sure if it works

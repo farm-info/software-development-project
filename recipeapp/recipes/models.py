@@ -32,6 +32,12 @@ class Likes(models.Model):
     recipe = models.ForeignKey(Recipes, on_delete=models.CASCADE, related_name="likes")
     created_date = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = (
+            "user",
+            "recipe",
+        )
+
 
 class Comments(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)

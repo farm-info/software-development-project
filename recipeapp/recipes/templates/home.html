@@ -21,7 +21,6 @@
             <p>Ingredients: {{ recipe.ingredients }}</p>
             <p>Steps: {{ recipe.steps }}</p>
             <p>Comments: {{ recipe.comments.all.count }}</p>
-            {% comment %} TODO like button {% endcomment %}
 
             <form action="{% url 'like_recipe' %}" method="post" hx-boost="true">
                 {% csrf_token %}

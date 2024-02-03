@@ -83,3 +83,11 @@ footer {
     height: auto;
     object-fit: cover;
 }
+
+.no-photo-avaliable {
+    background-color: #f5f5f5;
+    color: #999;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+}

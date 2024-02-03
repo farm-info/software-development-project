@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import Exists, OuterRef
+from django.db.models import Exists, OuterRef, Value
 from .models import Recipes, Likes, Comments
 from .forms import RecipeForm
 
@@ -8,8 +8,11 @@ from .forms import RecipeForm
 def home(request):
     # TODO actual algorithm
     # placeholder
-    likes = Likes.objects.filter(user=request.user, recipe=OuterRef("pk"))
-    recipes = Recipes.objects.all().annotate(has_liked=Exists(likes))
+    if request.user.is_authenticated:
+        likes = Likes.objects.filter(user=request.user, recipe=OuterRef("pk"))
+        recipes = Recipes.objects.all().annotate(has_liked=Exists(likes))
+    else:
+        recipes = Recipes.objects.all().annotate(has_liked=Value(False))
     return render(request, "home.html", {"recipes": recipes})
 
 
@@ -51,6 +54,7 @@ def add_comment(request, id):
 
 # TODO deal with is_imported_recipen
 # TODO test upload recipe
+@login_required
 def upload_recipe(request):
     if request.method == "POST":
         form = RecipeForm(request.POST, request.FILES)
@@ -65,6 +69,7 @@ def upload_recipe(request):
 
 
 # TODO
+@login_required
 def edit_recipe(request, id):
     recipe = get_object_or_404(Recipes, pk=id)
     if request.method == "POST":

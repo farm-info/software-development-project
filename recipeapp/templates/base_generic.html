@@ -23,17 +23,21 @@
                 <li>
                     <a href="{% url 'home' %}">FoodManJones</a>
                 </li>
-                <li>
-                    <a href="{% url 'login' %}">Login</a>
-                </li>
-                <li>
-                    <a href="{% url 'register' %}">Register</a>
-                </li>
+                {% comment %} TODO check if user is logged in {% endcomment %}
+                {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
                 <li>
                     <a href="{% url 'upload_recipe' %}">Upload a new recipe</a>
-                </li>
-                <li>
-                    <a href="{% url 'logout' %}">Logout</a>
                 </li>
             </ul>
         </nav>

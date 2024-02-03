@@ -18,12 +18,11 @@ class Recipes(models.Model):
                 check=(
                     models.Q(
                         is_imported_recipe=True,
-                        description__isnull=False,
-                        ingredients__isnull=False,
+                        author__isnull=True,
                     )
                     | models.Q(is_imported_recipe=False)
                 ),
-                name="imported_recipe_requires_description_ingredients",
+                name="user_created_recipe_requires_author",
             ),
         ]
 

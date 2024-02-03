@@ -27,16 +27,16 @@ class Recipes(models.Model):
         ]
 
 
+class Likes(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipes, on_delete=models.CASCADE, related_name="likes")
+    created_date = models.DateTimeField(auto_now_add=True)
+
+
 class Comments(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     recipe = models.ForeignKey(
         Recipes, on_delete=models.CASCADE, related_name="comments"
     )
     text = models.TextField()
-    created_date = models.DateTimeField(auto_now_add=True)
-
-
-class Likes(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    recipe = models.ForeignKey(Recipes, on_delete=models.CASCADE, related_name="likes")
     created_date = models.DateTimeField(auto_now_add=True)

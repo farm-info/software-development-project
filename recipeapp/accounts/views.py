@@ -3,6 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout as auth_logout
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 
 
 def login_view(request):
@@ -31,5 +32,6 @@ def register_view(request):
     return render(request, "register.html", {"form": form})
 
 
+@login_required
 def login_success(request):
     return render(request, "success.html")

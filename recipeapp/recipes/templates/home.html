@@ -27,7 +27,7 @@
             <p>Steps: {{ recipe.steps }}</p>
             <p>Comments: {{ recipe.comments.all.count }}</p>
 
-            <form action="{% url 'like_recipe' %}" method="post" hx-boost="true">
+            <form action="{% url 'like_recipe' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
                 {% if recipe.has_liked %}

@@ -6,8 +6,6 @@
 
 {% block content %}
 
-    <h2>FoodManJones?</h2>
-
     <div class="post">
         <h2>{{ recipe.title }}</h2>
         <h3>By {{ recipe.author }}</h3>
@@ -18,6 +16,7 @@
              style="object-fit: cover">
         <p>{{ recipe.description }}</p>
         <p>Ingredients: {{ recipe.ingredients }}</p>
+        <p>Steps: {{ recipe.steps }}</p>
         <p>Comments: {{ recipe.comments.all.count }}</p>
         <button class="like-button">Like</button>
         <p>Likes: {{ recipe.likes.all.count }}</p>

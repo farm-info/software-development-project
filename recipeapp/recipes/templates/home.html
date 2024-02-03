@@ -19,9 +19,11 @@
                  style="object-fit: cover">
             <p>{{ recipe.description }}</p>
             <p>Ingredients: {{ recipe.ingredients }}</p>
+            <p>Steps: {{ recipe.steps }}</p>
+            <p>Comments: {{ recipe.comments.all.count }}</p>
             {% comment %} TODO like button {% endcomment %}
             <button class="like-button">Like</button>
-            <p>Likes: {{ recipe.like_count }}</p>
+            <p>Likes: {{ recipe.likes.all.count }}</p>
         </div>
     {% empty %}
         <p>No posts yet.</p>

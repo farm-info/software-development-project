@@ -31,5 +31,5 @@ def register_view(request):
     return render(request, "register.html", {"form": form})
 
 
-def success(request):
+def login_success(request):
     return render(request, "success.html")

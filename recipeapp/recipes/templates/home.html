@@ -7,7 +7,7 @@
 {% block content %}
 
     {% for recipe in recipes %}
-        <div class="post">
+        <article class="recipe recipe-card">
             <h2>
                 <a href="{% url 'recipe' recipe.id %}">{{ recipe.title }}</a>
             </h2>
@@ -32,7 +32,7 @@
                 {% endif %}
                 <span>{{ recipe.likes.all.count }}</span>
             </form>
-        </div>
+        </article>
 
     {% empty %}
         <p>No posts yet.</p>

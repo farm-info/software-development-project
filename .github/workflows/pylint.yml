@@ -20,4 +20,5 @@ jobs:
         pip install pylint pylint-django
     - name: Analysing the code with pylint
       run: |
+        cd recipeapp
         pylint --load-plugins pylint_django --django-settings-module=recipeapp.settings $(git ls-files '*.py')

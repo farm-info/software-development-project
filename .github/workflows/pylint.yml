@@ -21,4 +21,4 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         cd recipeapp
-        pylint --load-plugins pylint_django --django-settings-module=recipeapp.settings $(git ls-files '*.py')
+        pylint --load-plugins pylint_django --django-settings-module=recipeapp.settings ./

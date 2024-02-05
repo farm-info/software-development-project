@@ -42,14 +42,17 @@ def like_recipe(request):
 
 @login_required
 def add_comment(request):
+    author = request.user
     recipe_id = request.POST.get("recipe_id")
     recipe = Recipes.objects.get(id=recipe_id)
     parent_comment_id = request.POST.get("parent_comment_id")
-    parent_comment = Comments.objects.get(id=parent_comment_id)
-    author = request.user
+    parent_comment = (
+        Comments.objects.get(id=parent_comment_id) if parent_comment_id else None
+    )
     text = request.POST["text"]
+
     comment = Comments(
-        author=author, recipe=recipe, text=text, parent_comment_id=parent_comment
+        author=author, recipe=recipe, parent_comment_id=parent_comment, text=text
     )
     comment.save()
     return redirect(request.META.get("HTTP_REFERER", "home"))

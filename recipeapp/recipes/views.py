@@ -25,7 +25,8 @@ def search(request):
 
 def recipe(request, id):
     recipe = get_object_or_404(Recipes, pk=id)
-    return render(request, "recipe.html", {"recipe": recipe})
+    comments = Comments.objects.filter(recipe=recipe, parent_comment_id=None)
+    return render(request, "recipe.html", {"recipe": recipe, "comments": comments})
 
 
 @login_required
@@ -41,11 +42,15 @@ def like_recipe(request):
 
 @login_required
 def add_comment(request):
-    author = request.user
     recipe_id = request.POST.get("recipe_id")
     recipe = Recipes.objects.get(id=recipe_id)
+    parent_comment_id = request.POST.get("parent_comment_id")
+    parent_comment = Comments.objects.get(id=parent_comment_id)
+    author = request.user
     text = request.POST["text"]
-    comment = Comments(author=author, recipe=recipe, text=text)
+    comment = Comments(
+        author=author, recipe=recipe, text=text, parent_comment_id=parent_comment
+    )
     comment.save()
     return redirect(request.META.get("HTTP_REFERER", "home"))
 

@@ -46,7 +46,7 @@
         <button type="submit">Add</button>
     </form>
 
-    {% for comment in recipe.comments.all %}
+    {% for comment in comments %}
         <div class="comment">
             <div class="comment-author">{{ comment.author }}</div>
             <div class="comment-text">{{ comment.text }}</div>

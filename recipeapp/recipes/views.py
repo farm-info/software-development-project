@@ -39,17 +39,15 @@ def like_recipe(request):
     return redirect(request.META.get("HTTP_REFERER", "home"))
 
 
-# just pasted some ai generated stuff, not sure if it works
 @login_required
-def add_comment(request, id):
-    post = get_object_or_404(Recipes, pk=id)
-    if request.method == "POST":
-        text = request.POST["comment"]
-        comment = Comments(author=request.user, post=post, text=text)
-        comment.save()
-        return redirect("recipe", id=recipe.id)
-    else:
-        return render(request, "add_comment.html", {"post": post})
+def add_comment(request):
+    author = request.user
+    recipe_id = request.POST.get("recipe_id")
+    recipe = Recipes.objects.get(id=recipe_id)
+    text = request.POST["text"]
+    comment = Comments(author=author, recipe=recipe, text=text)
+    comment.save()
+    return redirect(request.META.get("HTTP_REFERER", "home"))
 
 
 # TODO deal with is_imported_recipen

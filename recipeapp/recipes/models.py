@@ -46,3 +46,6 @@ class Comments(models.Model):
     )
     text = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
+    parent_comment_id = models.ForeignKey(
+        "self", null=True, on_delete=models.CASCADE, related_name="replies"
+    )

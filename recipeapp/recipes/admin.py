@@ -6,8 +6,7 @@ from .models import Recipes, Likes, Comments
 class RecipesAdmin(admin.ModelAdmin):
     list_display = ("title", "author", "is_imported_recipe", "is_verified")
     list_filter = ("is_imported_recipe", "is_verified")
-    search_fields = ("title", "description")
-    # TODO update once we add author_username
+    search_fields = ("title", "description", "author__username")
 
 
 @admin.register(Likes)

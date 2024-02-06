@@ -7,9 +7,7 @@
 {% block content %}
 
     <article class="recipe">
-        <h2>
-            <a href="{% url 'recipe' recipe.id %}">{{ recipe.title }}</a>
-        </h2>
+        <h2>{{ recipe.title }}</h2>
         <h3>By {{ recipe.author }}</h3>
 
         {% if recipe.photo %}

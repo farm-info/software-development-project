@@ -36,7 +36,6 @@
         </form>
     </article>
 
-    {% comment %} not sure if this works {% endcomment %}
     <form action="{% url 'add_comment' %}" method="post">
         {% csrf_token %}
         <input type="hidden" name="recipe_id" value="{{ recipe.id }}">

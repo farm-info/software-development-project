@@ -58,7 +58,6 @@ def add_comment(request):
     return redirect(request.META.get("HTTP_REFERER", "home"))
 
 
-# TODO deal with is_imported_recipen
 # TODO test upload recipe
 @login_required
 def upload_recipe(request):

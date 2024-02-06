@@ -43,37 +43,7 @@
         <button type="submit">Add</button>
     </form>
 
-    {% for comment in comments %}
-        <div class="comment">
-            <div class="comment-author">{{ comment.author }}</div>
-            <div class="comment-text">{{ comment.text }}</div>
-            <div class="comment-date">{{ comment.created_date }}</div>
-            <form action="{% url 'add_comment' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
-                <input type="hidden" name="parent_comment_id" value="{{ comment.id }}">
-                <input type="text" name="text" placeholder="Reply to a comment">
-                <button type="submit">Reply</button>
-            </form>
-
-            {% for reply in comment.replies.all %}
-                <div class="comment reply">
-                    <div class="comment-parent">{{ reply.parent.id }}</div>
-                    <div class="comment-author">{{ reply.author }}</div>
-                    <div class="comment-text">{{ reply.text }}</div>
-                    <div class="comment-date">{{ reply.created_date }}</div>
-                    <form action="{% url 'add_comment' %}" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
-                        <input type="hidden" name="parent_comment_id" value="{{ comment.id }}">
-                        <input type="text" name="text" placeholder="Reply to a comment">
-                        <button type="submit">Reply</button>
-                    </form>
-                </div>
-            {% endfor %}
-        </div>
-    {% empty %}
-        <div>No comments yet.</div>
-    {% endfor %}
+    <hr>
+    {% include "comments.html" with comments=comments %}
 
 {% endblock content %}

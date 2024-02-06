@@ -18,6 +18,6 @@ class LikesAdmin(admin.ModelAdmin):
 
 @admin.register(Comments)
 class CommentsAdmin(admin.ModelAdmin):
-    list_display = ("author", "recipe", "created_date")
+    list_display = ("author", "recipe", "text", "created_date", "parent_comment_id")
     list_filter = ("created_date",)
     search_fields = ("author__username", "recipe__title")

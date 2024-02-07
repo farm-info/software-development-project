@@ -95,6 +95,10 @@ footer {
     color: #999;
     text-align: center;
     padding: 20px;
+}
+
+.no-photo-avaliable,
+.recipe img {
     border-radius: 10px;
 }
 

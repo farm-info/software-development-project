@@ -12,9 +12,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect(
-                "home"
-            )  # 'home' should be replaced with the name of your home URL pattern
+            return redirect(request.META.get("HTTP_REFERER", "home"))
     else:
         form = AuthenticationForm()
     return render(request, "login.html", {"form": form})
@@ -25,16 +23,10 @@ def register_view(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect("success")
-            # For example, you can redirect the user to a success page
+            return redirect(request.META.get("HTTP_REFERER", "home"))
     else:
         form = UserCreationForm()
     return render(request, "register.html", {"form": form})
-
-
-@login_required
-def login_success(request):
-    return render(request, "success.html")
 
 
 @login_required

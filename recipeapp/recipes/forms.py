@@ -1,10 +1,10 @@
 from django import forms
-from .models import Recipes
+from .models import Recipe
 
 
 class RecipeForm(forms.ModelForm):
     class Meta:
-        model = Recipes
+        model = Recipe
         fields = [
             "title",
             "photo",

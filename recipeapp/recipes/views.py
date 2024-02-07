@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Exists, OuterRef, Value
-from .models import Recipes, Likes, Comments
+from .models import Recipe, Like, Comment
 from .forms import RecipeForm
 
 
@@ -9,32 +9,32 @@ def home(request):
     # TODO actual algorithm
     # placeholder
     if request.user.is_authenticated:
-        likes = Likes.objects.filter(user=request.user, recipe=OuterRef("pk"))
-        recipes = Recipes.objects.all().annotate(has_liked=Exists(likes))
+        likes = Like.objects.filter(user=request.user, recipe=OuterRef("pk"))
+        recipes = Recipe.objects.all().annotate(has_liked=Exists(likes))
     else:
-        recipes = Recipes.objects.all().annotate(has_liked=Value(False))
+        recipes = Recipe.objects.all().annotate(has_liked=Value(False))
     return render(request, "home.html", {"recipes": recipes})
 
 
 def search(request):
     # TODO actual algorithm
     # placeholder
-    results = Recipes.objects.all()
+    results = Recipe.objects.all()
     return render(request, "search.html", {"results": results})
 
 
 def recipe(request, id):
-    recipe = get_object_or_404(Recipes, pk=id)
-    comments = Comments.objects.filter(recipe=recipe, parent_comment_id=None)
+    recipe = get_object_or_404(Recipe, pk=id)
+    comments = Comment.objects.filter(recipe=recipe, parent_comment_id=None)
     return render(request, "recipe.html", {"recipe": recipe, "comments": comments})
 
 
 @login_required
 def like_recipe(request):
     recipe_id = request.POST.get("recipe_id")
-    recipe = Recipes.objects.get(id=recipe_id)
+    recipe = Recipe.objects.get(id=recipe_id)
     user = request.user
-    like, created = Likes.objects.get_or_create(user=user, recipe=recipe)
+    like, created = Like.objects.get_or_create(user=user, recipe=recipe)
     if not created:
         like.delete()
     return redirect(request.META.get("HTTP_REFERER", "home"))
@@ -44,14 +44,14 @@ def like_recipe(request):
 def add_comment(request):
     author = request.user
     recipe_id = request.POST.get("recipe_id")
-    recipe = Recipes.objects.get(id=recipe_id)
+    recipe = Recipe.objects.get(id=recipe_id)
     parent_comment_id = request.POST.get("parent_comment_id")
     parent_comment = (
-        Comments.objects.get(id=parent_comment_id) if parent_comment_id else None
+        Comment.objects.get(id=parent_comment_id) if parent_comment_id else None
     )
     text = request.POST["text"]
 
-    comment = Comments(
+    comment = Comment(
         author=author, recipe=recipe, parent_comment_id=parent_comment, text=text
     )
     comment.save()
@@ -76,7 +76,7 @@ def upload_recipe(request):
 # TODO
 @login_required
 def edit_recipe(request, id):
-    recipe = get_object_or_404(Recipes, pk=id)
+    recipe = get_object_or_404(Recipe, pk=id)
     if request.method == "POST":
         form = RecipeForm(request.POST, instance=recipe)
         if form.is_valid():

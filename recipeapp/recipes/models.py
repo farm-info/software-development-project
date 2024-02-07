@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Recipes(models.Model):
+class Recipe(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     is_imported_recipe = models.BooleanField(default=False)
@@ -27,9 +27,9 @@ class Recipes(models.Model):
         ]
 
 
-class Likes(models.Model):
+class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    recipe = models.ForeignKey(Recipes, on_delete=models.CASCADE, related_name="likes")
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="likes")
     created_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -39,10 +39,10 @@ class Likes(models.Model):
         )
 
 
-class Comments(models.Model):
+class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     recipe = models.ForeignKey(
-        Recipes, on_delete=models.CASCADE, related_name="comments"
+        Recipe, on_delete=models.CASCADE, related_name="comments"
     )
     text = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)

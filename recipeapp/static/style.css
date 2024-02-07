@@ -91,6 +91,7 @@ footer {
 }
 
 .no-photo-avaliable {
+    /* TODO this is the exact same color as the recipe default background */
     background-color: #f5f5f5;
     color: #999;
     text-align: center;

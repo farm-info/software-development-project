@@ -10,21 +10,6 @@
         <h2>{{ recipe.title }}</h2>
         <h3>By {{ recipe.author }}</h3>
 
-        {% if recipe.photo %}
-            <img src="{{ recipe.photo.url }}"
-                 alt="{{ recipe.title }}"
-                 width="300"
-                 height="200">
-        {% else %}
-            <p>No photo available</p>
-        {% endif %}
-
-        <p>{{ recipe.description }}</p>
-        <p>Ingredients: {{ recipe.ingredients }}</p>
-        <p>Steps: {{ recipe.steps }}</p>
-    </article>
-
-    <section>
         <form action="{% url 'like_recipe' %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
@@ -36,6 +21,32 @@
             <span>{{ recipe.likes.all.count }}</span>
         </form>
 
+        {% if recipe.photo %}
+            <img src="{{ recipe.photo.url }}"
+                 alt="{{ recipe.title }}"
+                 width="300"
+                 height="200">
+        {% else %}
+            <p class="no-photo-avaliable">No photo available</p>
+        {% endif %}
+
+        <p>{{ recipe.description|linebreaks }}</p>
+        <section>
+            <h4>Ingredients</h4>
+            <ul>
+                {% for line in recipe.get_ingredients_lines %}<li>{{ line }}</li>{% endfor %}
+            </ul>
+        </section>
+
+        <section>
+            <h4>Steps</h4>
+            <ol>
+                {% for line in recipe.get_steps_lines %}<li>{{ line }}</li>{% endfor %}
+            </ol>
+        </section>
+    </article>
+
+    <section>
         <form action="{% url 'add_comment' %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="recipe_id" value="{{ recipe.id }}">

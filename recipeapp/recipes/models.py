@@ -12,6 +12,12 @@ class Recipe(models.Model):
     ingredients = models.TextField()
     steps = models.TextField()
 
+    def get_ingredients_lines(self):
+        return self.ingredients.splitlines() if self.ingredients else []
+
+    def get_steps_lines(self):
+        return self.steps.splitlines() if self.steps else []
+
     class Meta:
         constraints = [
             models.CheckConstraint(

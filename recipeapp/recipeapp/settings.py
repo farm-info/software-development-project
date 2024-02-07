@@ -80,7 +80,7 @@ WSGI_APPLICATION = "recipeapp.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-if getenv("PGNAME"):
+if getenv("POSTGRES_URL"):
     DEBUG = False
     DATABASES = {
         "default": {

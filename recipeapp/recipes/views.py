@@ -58,7 +58,6 @@ def add_comment(request):
     return redirect(request.META.get("HTTP_REFERER", "home"))
 
 
-# TODO test upload recipe
 @login_required
 def upload_recipe(request):
     if request.method == "POST":

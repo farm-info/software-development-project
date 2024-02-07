@@ -49,6 +49,3 @@ class Comments(models.Model):
     parent_comment_id = models.ForeignKey(
         "self", null=True, on_delete=models.CASCADE, related_name="replies"
     )
-
-    def get_child_comments(self):
-        return Comments.objects.filter(parent_comment_id=self)

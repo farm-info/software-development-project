@@ -1,6 +1,7 @@
 {% for comment in comments %}
     <div class="comment">
         <div class="comment-author">{{ comment.author }}</div>
+        {{ depth }}
         <div class="comment-text">{{ comment.text }}</div>
         <div class="comment-date">{{ comment.created_date }}</div>
         <form action="{% url 'add_comment' %}" method="post">
@@ -11,12 +12,12 @@
             <button type="submit">Reply</button>
         </form>
 
-        {% if comment.get_child_comments %}
-            <div class="replies">
-                {% for reply in comment.get_child_comments %}
-                    {% include "comments.html" with comment=reply %}
-                {% endfor %}
-            </div>
+        {% if depth < 4 %}
+            {% if comment.replies.all.exists %}
+                <div class="replies" style="margin-left: {% widthratio depth 1 20 %}px">
+                    {% include "comments.html" with comments=comment.replies.all depth=depth|add:"1" %}
+                </div>
+            {% endif %}
         {% endif %}
     </div>
 {% empty %}

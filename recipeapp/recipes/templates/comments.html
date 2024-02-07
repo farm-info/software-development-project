@@ -1,3 +1,5 @@
+{% comment %} to anyone using this, depth count must start from 1 due to some maths in the template {% endcomment %}
+
 {% for comment in comments %}
     <div class="comment">
         <div class="comment-author">{{ comment.author }}</div>

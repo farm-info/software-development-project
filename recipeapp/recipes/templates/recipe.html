@@ -22,8 +22,9 @@
         <p>{{ recipe.description }}</p>
         <p>Ingredients: {{ recipe.ingredients }}</p>
         <p>Steps: {{ recipe.steps }}</p>
-        <p>Comments: {{ recipe.comments.all.count }}</p>
+    </article>
 
+    <section>
         <form action="{% url 'like_recipe' %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
@@ -34,16 +35,17 @@
             {% endif %}
             <span>{{ recipe.likes.all.count }}</span>
         </form>
-    </article>
 
-    <form action="{% url 'add_comment' %}" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
-        <input type="text" name="text" placeholder="Add a comment">
-        <button type="submit">Add</button>
-    </form>
+        <form action="{% url 'add_comment' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+            <input type="text" name="text" placeholder="Add a comment">
+            <button type="submit">Add</button>
+        </form>
+    </section>
 
     <hr>
+    <p>{{ recipe.comments.all.count }} comments</p>
     {% include "comments.html" with comments=comments depth=1 %}
 
 {% endblock content %}

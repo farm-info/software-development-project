@@ -1,0 +1,14 @@
+{
+    "builds": [
+        {
+            "src": "reciepapp/wsgi.py",
+            "use": "@vercel/python"
+        }
+    ],
+    "routes": [
+        {
+            "src": "(.*)",
+            "dest": "reciepapp/wsgi.py"
+        }
+    ]
+}

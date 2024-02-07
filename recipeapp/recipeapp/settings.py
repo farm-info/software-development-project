@@ -29,7 +29,7 @@ DEBUG = True
 
 LOGIN_URL = "login"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".vercel.app", ".now.sh"]
 
 
 # Application definition
@@ -80,16 +80,17 @@ WSGI_APPLICATION = "recipeapp.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-if getenv("POSTGRES_URL"):
+if getenv("PGNAME"):
+    DEBUG = False
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
             "URL": getenv("POSTGRES_URL"),
-            "NAME": getenv("PGNAME"),
-            "USER": getenv("PGUSER"),
+            # "NAME": getenv("POSTGRES_NAME"),
+            "USER": getenv("POSTGRES_USER"),
             "PASSWORD": getenv("POSTGRES_PASSWORD"),
-            "HOST": getenv("PGHOST"),
-            "PORT": getenv("PGPORT"),
+            "HOST": getenv("POSTGRES_HOST"),
+            "PORT": getenv("POSTGRES_HOST"),
         }
     }
 else:
@@ -136,6 +137,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles_build" / "static"
 
 # Media files (Uploaded by users)
 MEDIA_URL = "/media/"

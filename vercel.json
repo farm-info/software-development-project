@@ -19,7 +19,7 @@
     ],
     "routes": [
         {
-            "src": "recipeapp/static/(.*)",
+            "src": "recipeapp/staticfiles_build/static/(.*)",
             "dest": "/static/$1"
         },
         {

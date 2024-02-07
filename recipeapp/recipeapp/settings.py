@@ -86,7 +86,7 @@ if getenv("POSTGRES_URL"):
         "default": {
             "ENGINE": "django.db.backends.postgresql",
             "URL": getenv("POSTGRES_URL"),
-            # "NAME": getenv("POSTGRES_NAME"),
+            "NAME": getenv("POSTGRES_NAME"),
             "USER": getenv("POSTGRES_USER"),
             "PASSWORD": getenv("POSTGRES_PASSWORD"),
             "HOST": getenv("POSTGRES_HOST"),

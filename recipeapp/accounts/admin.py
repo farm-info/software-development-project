@@ -1,4 +1,5 @@
 from django.contrib import admin
+from .models import UserProfile
 
 class UserProfile(AbstractUser):
     USER_TYPE_CHOICES = [

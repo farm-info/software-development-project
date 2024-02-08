@@ -84,3 +84,11 @@ def edit_recipe(request, id):
     else:
         form = RecipeForm(instance=recipe)
     return render(request, "edit_recipe.html", {"form": form})
+
+
+# TODO test
+@login_required
+def delete_recipe(request, id):
+    recipe = get_object_or_404(Recipe, pk=id)
+    recipe.delete()
+    return redirect("home")

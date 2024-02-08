@@ -12,7 +12,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect(request.META.get("HTTP_REFERER", "home"))
+            return redirect("home")
     else:
         form = AuthenticationForm()
     return render(request, "login.html", {"form": form})
@@ -23,7 +23,7 @@ def register_view(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect(request.META.get("HTTP_REFERER", "home"))
+            return redirect("home")
     else:
         form = UserCreationForm()
     return render(request, "register.html", {"form": form})

@@ -31,6 +31,9 @@
 
         {% if request.user == recipe.author %}
             <a class="edit-button button" href="{% url 'edit_recipe' recipe.id %}">Edit</a>
+        {% endif %}
+
+        {% if request.user.account_type == "admin" or request.user == recipe.author %}
             {% comment %} TODO comfirmation popup? {% endcomment %}
             <a class="delete-button button"
                href="{% url 'delete_recipe' recipe.id %}">Delete</a>

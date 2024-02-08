@@ -3,6 +3,17 @@ from django.db import models
 
 
 class User(AbstractUser):
+    ACCOUNT_TYPE_CHOICES = (
+        ("admin", "Admin"),
+        ("professional", "Professional"),
+        ("user", "User"),
+    )
+
+    account_type = models.CharField(
+        max_length=12,
+        choices=ACCOUNT_TYPE_CHOICES,
+        default="user",
+    )
     email = models.EmailField(
         unique=True,
         blank=True,

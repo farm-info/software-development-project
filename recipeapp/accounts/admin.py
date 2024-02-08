@@ -1,4 +1,4 @@
-from django.contrib..models import AbstractUser
+from django.contrib.models import AbstractUser
 from django.db import models
 
 class User(AbstractUser):

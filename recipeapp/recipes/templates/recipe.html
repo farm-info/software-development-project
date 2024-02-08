@@ -1,4 +1,5 @@
 {% extends "base_generic.html" %}
+{% load static %}
 
 {% block title %}
     {{ recipe.title }}
@@ -10,10 +11,7 @@
         <h2>
             {{ recipe.title }}
             {% if recipe.is_verified %}
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 512 512">
-                    <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                    <path d="M211 7.3C205 1 196-1.4 187.6 .8s-14.9 8.9-17.1 17.3L154.7 80.6l-62-17.5c-8.4-2.4-17.4 0-23.5 6.1s-8.5 15.1-6.1 23.5l17.5 62L18.1 170.6c-8.4 2.1-15 8.7-17.3 17.1S1 205 7.3 211l46.2 45L7.3 301C1 307-1.4 316 .8 324.4s8.9 14.9 17.3 17.1l62.5 15.8-17.5 62c-2.4 8.4 0 17.4 6.1 23.5s15.1 8.5 23.5 6.1l62-17.5 15.8 62.5c2.1 8.4 8.7 15 17.1 17.3s17.3-.2 23.4-6.4l45-46.2 45 46.2c6.1 6.2 15 8.7 23.4 6.4s14.9-8.9 17.1-17.3l15.8-62.5 62 17.5c8.4 2.4 17.4 0 23.5-6.1s8.5-15.1 6.1-23.5l-17.5-62 62.5-15.8c8.4-2.1 15-8.7 17.3-17.1s-.2-17.4-6.4-23.4l-46.2-45 46.2-45c6.2-6.1 8.7-15 6.4-23.4s-8.9-14.9-17.3-17.1l-62.5-15.8 17.5-62c2.4-8.4 0-17.4-6.1-23.5s-15.1-8.5-23.5-6.1l-62 17.5L341.4 18.1c-2.1-8.4-8.7-15-17.1-17.3S307 1 301 7.3L256 53.5 211 7.3z" />
-                </svg>
+                <img src="{% static "verification.svg" %}" class="icon" alt="verified">
             {% endif %}
         </h2>
         <h3>By {{ recipe.author }}</h3>
@@ -23,26 +21,28 @@
             {% csrf_token %}
             <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
             {% if recipe.has_liked %}
-                <button class="like-button">Unlike</button>
+                <button class="like-button button">Unlike</button>
             {% else %}
-                <button class="like-button">Like</button>
+                <button class="like-button button">Like</button>
             {% endif %}
             <span>{{ recipe.likes.all.count }}</span>
+            <br>
         </form>
 
         {% if request.user == recipe.author %}
-            <a class="edit-button" href="{% url 'edit_recipe' recipe.id %}">Edit</a>
+            <a class="edit-button button" href="{% url 'edit_recipe' recipe.id %}">Edit</a>
             {% comment %} TODO comfirmation popup? {% endcomment %}
-            <a class="delete-button" href="{% url 'delete_recipe' recipe.id %}">Delete</a>
+            <a class="delete-button button"
+               href="{% url 'delete_recipe' recipe.id %}">Delete</a>
         {% endif %}
 
         {% if request.user.account_type == "professional" %}
             {% comment %} TODO comfirmation popup? {% endcomment %}
             {% if recipe.is_verified %}
-                <a class="unverify-button"
+                <a class="unverify-button button"
                    href="{% url 'verify_recipe' recipe.id 'unverify' %}">Unverify recipe</a>
             {% else %}
-                <a class="verify-button"
+                <a class="verify-button button"
                    href="{% url 'verify_recipe' recipe.id 'verify' %}">Verify recipe</a>
             {% endif %}
         {% endif %}

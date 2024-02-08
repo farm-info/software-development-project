@@ -120,3 +120,15 @@ footer {
 .comment-text {}
 
 .reply {}
+
+/* button */
+/* TODO style them like buttons */
+/* TODO assign this to links that need to look like buttons */
+.button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+}

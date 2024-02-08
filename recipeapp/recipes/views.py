@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Exists, OuterRef, Value
 from .models import Recipe, Like, Comment
 from .forms import RecipeForm
+from django.http import HttpResponseBadRequest
 
 
 def home(request):
@@ -80,8 +81,10 @@ def edit_recipe(request, id):
         if form.is_valid():
             recipe = form.save()
             return redirect("recipe", id=recipe.id)
-    else:
-        form = RecipeForm(instance=recipe)
+        else:
+            return HttpResponseBadRequest("Invalid action")
+
+    form = RecipeForm(instance=recipe)
     return render(request, "edit_recipe.html", {"form": form, "recipe": recipe})
 
 

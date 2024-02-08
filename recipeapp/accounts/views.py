@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from django.shortcuts import redirect
-from django.contrib.auth.forms import UserCreationForm
+from .forms import FullUserCreationForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -20,12 +20,12 @@ def login_view(request):
 
 def register_view(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = FullUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             return redirect("home")
     else:
-        form = UserCreationForm()
+        form = FullUserCreationForm()
     return render(request, "register.html", {"form": form})
 
 

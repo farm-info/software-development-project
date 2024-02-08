@@ -112,6 +112,12 @@ footer {
     margin-bottom: 10px;
 }
 
+.icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+}
+
 /* unused for now */
 .comment-author {}
 

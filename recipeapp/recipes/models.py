@@ -14,6 +14,7 @@ class Recipe(models.Model):
     description = models.TextField(null=True, blank=True)
     ingredients = models.TextField()
     steps = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def get_ingredients_lines(self):
         return self.ingredients.splitlines() if self.ingredients else []

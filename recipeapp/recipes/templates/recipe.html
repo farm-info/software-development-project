@@ -21,10 +21,21 @@
             <span>{{ recipe.likes.all.count }}</span>
         </form>
 
-        {% if recipe.author == request.user %}
+        {% if request.user == recipe.author %}
             <a class="edit-button" href="{% url 'edit_recipe' recipe.id %}">Edit</a>
             {% comment %} TODO comfirmation popup? {% endcomment %}
             <a class="delete-button" href="{% url 'delete_recipe' recipe.id %}">Delete</a>
+        {% endif %}
+
+        {% if request.user.account_type == "professional" %}
+            {% comment %} TODO comfirmation popup? {% endcomment %}
+            {% if recipe.is_verified %}
+                <a class="unverify-button"
+                   href="{% url 'verify_recipe' recipe.id 'unverify' %}">Unverify recipe</a>
+            {% else %}
+                <a class="verify-button"
+                   href="{% url 'verify_recipe' recipe.id 'verify' %}">Verify recipe</a>
+            {% endif %}
         {% endif %}
 
         {% if recipe.photo %}

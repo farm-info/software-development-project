@@ -11,4 +11,5 @@ urlpatterns = [
     path("upload/", views.upload_recipe, name="upload_recipe"),
     path("recipe/<int:id>/edit/", views.edit_recipe, name="edit_recipe"),
     path("recipe/<int:id>/delete/", views.delete_recipe, name="delete_recipe"),
+    path("recipe/<int:id>/<str:action>/", views.verify_recipe, name="verify_recipe"),
 ]

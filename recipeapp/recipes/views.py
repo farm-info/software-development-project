@@ -89,6 +89,19 @@ def edit_recipe(request, id):
 
 
 @login_required
+def verify_recipe(request, id, action):
+    recipe = get_object_or_404(Recipe, pk=id)
+    if action == "verify":
+        recipe.is_verified = True
+    elif action == "unverify":
+        recipe.is_verified = False
+    else:
+        return HttpResponseBadRequest("Invalid action")
+    recipe.save()
+    return redirect("recipe", id=id)
+
+
+@login_required
 def delete_recipe(request, id):
     recipe = get_object_or_404(Recipe, pk=id)
     recipe.delete()

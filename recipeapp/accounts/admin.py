@@ -2,7 +2,7 @@ from django.contrib..models import AbstractUser
 from django.db import models
 
 class User(AbstractUser):
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, primary_key=True)
     profile_picture = models.ImageField(upload_to='profile_pictures', null=True, blank=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     age = models.PositiveIntegerField(null=True, blank=True)

@@ -83,7 +83,7 @@ def edit_recipe(request, id):
             return redirect("recipe", id=recipe.id)
     else:
         form = RecipeForm(instance=recipe)
-    return render(request, "edit_recipe.html", {"form": form})
+    return render(request, "edit_recipe.html", {"form": form, "recipe": recipe})
 
 
 # TODO test

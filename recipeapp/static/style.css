@@ -86,9 +86,16 @@ footer {
     aspect-ratio: 1;
 }
 
-.recipe img {
+.recipe img,
+.recipe-card img {
     height: auto;
     object-fit: cover;
+}
+
+.no-photo-avaliable,
+.recipe img,
+.recipe-card img {
+    border-radius: 10px;
 }
 
 .no-photo-avaliable {
@@ -97,11 +104,6 @@ footer {
     color: #999;
     text-align: center;
     padding: 20px;
-}
-
-.no-photo-avaliable,
-.recipe img {
-    border-radius: 10px;
 }
 
 /* recipe */

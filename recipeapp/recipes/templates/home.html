@@ -7,7 +7,7 @@
 {% block content %}
 
     {% for recipe in recipes %}
-        <article class="recipe recipe-card">
+        <article class="recipe-card">
             <h2>
                 <a href="{% url 'recipe' recipe.id %}">{{ recipe.title }}</a>
             </h2>

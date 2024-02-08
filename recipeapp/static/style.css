@@ -129,12 +129,23 @@ footer {
 
 /* button */
 /* TODO style them like buttons */
-/* TODO assign this to links that need to look like buttons */
+/* TODO make it consistent */
+button,
 .button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
+    padding: 5px;
+    border-radius: 3px;
+
     background-color: #333;
     color: #fff;
+
+    border: none;
+    text-decoration: none;
+    font-size: 1em;
+
     cursor: pointer;
+}
+
+button:hover,
+.button:hover {
+    background-color: #555;
 }

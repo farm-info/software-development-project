@@ -4,5 +4,7 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # Add more fields here as needed
     bio = models.TextField()
+    profile_picture = models.ImageField(
+        upload_to="media/profile_pictures/", null=True, blank=True
+    )

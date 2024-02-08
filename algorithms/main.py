@@ -1,21 +1,41 @@
+import os
 from textwrap import dedent
 import warnings
 import tfidf
+from joblib import dump, load
 
 
 # change this to switch between search and recommendation mode
-search_mode = False
+search_mode = True
 warnings.filterwarnings("ignore")
 
 
-# put your datasets in /algorithms/datasets/ so that git will ignore them
-print("Loading dataset... ", end="")
-dataset = tfidf.load_dataset("algorithms/datasets/recipe_nlg_lite/train.csv", "	")
-print("done")
+if (
+    os.path.exists("algorithms/results/similarity.joblib")
+    and os.path.exists("algorithms/results/indices.joblib")
+    and os.path.exists("algorithms/results/dataset.joblib")
+):
+    print("Processed data already exists.")
+    dataset = load("algorithms/results/dataset.joblib")
+    similarity = load("algorithms/results/similarity.joblib")
+    indices = load("algorithms/results/indices.joblib")
 
-print("Processing dataset... ", end="")
-similarity, indices = tfidf.process_data(dataset, use_alt_stopwords=True)
-print("done")
+else:
+    print("First time setup since processed data isn't found.")
+    # put your datasets in /algorithms/datasets/ so that git will ignore them
+    print("Loading dataset... ", end="")
+    dataset = tfidf.load_dataset("algorithms/datasets/recipe_nlg_lite/train.csv", "	")
+    print("done")
+
+    print("Processing dataset... ", end="")
+    similarity, indices = tfidf.process_data(dataset, use_alt_stopwords=True)
+    print("done")
+
+    print("Saving processed data... ", end="")
+    dump(dataset, "algorithms/results/dataset.joblib")
+    dump(similarity, "algorithms/results/similarity.joblib")
+    dump(indices, "algorithms/results/indices.joblib")
+    print("done")
 
 
 print(
@@ -23,7 +43,6 @@ print(
         """
         Please Enter the uid of the recipe you want to find similar recipes for.
         Enter 'exit' to exit the program.
-        Enter 'switch' to switch between search or recommendation mode.
         You can also view the current recommendations by opening the csv file.
         """
     )

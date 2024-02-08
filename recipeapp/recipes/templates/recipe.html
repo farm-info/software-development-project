@@ -21,6 +21,12 @@
             <span>{{ recipe.likes.all.count }}</span>
         </form>
 
+        {% if recipe.author == request.user %}
+            <a class="edit-button" href="{% url 'edit_recipe' recipe.id %}">Edit</a>
+            {% comment %} TODO comfirmation popup? {% endcomment %}
+            <a class="delete-button" href="{% url 'delete_recipe' recipe.id %}">Delete</a>
+        {% endif %}
+
         {% if recipe.photo %}
             <img src="{{ recipe.photo.url }}"
                  alt="{{ recipe.title }}"

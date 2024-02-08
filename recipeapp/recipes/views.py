@@ -72,7 +72,6 @@ def upload_recipe(request):
     return render(request, "upload_recipe.html", {"form": form})
 
 
-# TODO
 @login_required
 def edit_recipe(request, id):
     recipe = get_object_or_404(Recipe, pk=id)
@@ -83,4 +82,11 @@ def edit_recipe(request, id):
             return redirect("recipe", id=recipe.id)
     else:
         form = RecipeForm(instance=recipe)
-    return render(request, "edit_recipe.html", {"form": form})
+    return render(request, "edit_recipe.html", {"form": form, "recipe": recipe})
+
+
+@login_required
+def delete_recipe(request, id):
+    recipe = get_object_or_404(Recipe, pk=id)
+    recipe.delete()
+    return redirect("home")

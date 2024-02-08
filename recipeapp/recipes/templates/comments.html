@@ -3,9 +3,8 @@
 {% for comment in comments %}
     <div class="comment">
         <div class="comment-author">{{ comment.author }}</div>
-        {{ depth }}
-        <div class="comment-text">{{ comment.text }}</div>
         <div class="comment-date">{{ comment.created_date }}</div>
+        <div class="comment-text">{{ comment.text }}</div>
         <form action="{% url 'add_comment' %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
@@ -16,7 +15,7 @@
 
         {% if depth < 4 %}
             {% if comment.replies.all.exists %}
-                <div class="replies" style="margin-left: {% widthratio depth 1 20 %}px">
+                <div class="reply" style="margin-left: {% widthratio depth 1 20 %}px">
                     {% include "comments.html" with comments=comment.replies.all depth=depth|add:"1" %}
                 </div>
             {% endif %}

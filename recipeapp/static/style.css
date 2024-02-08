@@ -112,7 +112,11 @@ footer {
     margin-bottom: 10px;
 }
 
-/* unused for now, i'll find a way to use this */
-.reply {
-    margin-left: 20px;
-}
+/* unused for now */
+.comment-author {}
+
+.comment-date {}
+
+.comment-text {}
+
+.reply {}

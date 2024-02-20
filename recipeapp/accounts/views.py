@@ -5,6 +5,9 @@ from django.shortcuts import redirect
 from .forms import FullUserCreationForm
 from django.contrib.auth.decorators import login_required
 
+from .forms import FullUserCreationForm, CustomUserChangeForm
+from django.contrib.auth import get_user_model
+
 
 def login_view(request):
     if request.method == "POST":
@@ -35,5 +38,17 @@ def logout_view(request):
     return redirect("home")
 
 
+
 def profile(request):
     return render(request, "profile.html")
+
+
+def edit_profile(request):
+    if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = CustomUserChangeForm(instance=request.user)
+    return render(request, 'editprofile.html', {'form': form})

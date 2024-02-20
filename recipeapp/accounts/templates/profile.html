@@ -4,6 +4,8 @@
     Profile
 {% endblock title %}
 
+{% url 'editprofile' as editprofile_url %}
+
 {% block content %}
 <div class="container-fluid">
     <div class="text-left">
@@ -30,11 +32,11 @@
             <li>No previously made comments.</li>
             <button onclick="redirectToEditProfile()">Edit Profile</button>
                 
-                <script>
-                    function redirectToEditProfile() {
-                        window.location.href = "/accounts/templates/editprofile.html";
-                    }
-                </script>
+            <script>
+                function redirectToEditProfile() {
+                    window.location.href = "{{ editprofile_url }}";
+                }
+            </script>
             
         {% endfor %}
         </ul>

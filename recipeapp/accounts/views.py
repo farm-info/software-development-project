@@ -1,13 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
-from django.shortcuts import redirect
 from .forms import FullUserCreationForm
 from django.contrib.auth.decorators import login_required
 
-from .forms import FullUserCreationForm, CustomUserChangeForm
-from django.contrib.auth import get_user_model
 
+from django.contrib.auth.forms import UserChangeForm
+from django.urls import reverse
+from .forms import EditProfileForm
 
 def login_view(request):
     if request.method == "POST":
@@ -43,12 +43,18 @@ def profile(request):
     return render(request, "profile.html")
 
 
-def edit_profile(request):
+@login_required
+def editprofile(request):
     if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, instance=request.user)
+        form = EditProfileForm(request.POST, instance=request.user)
+
         if form.is_valid():
             form.save()
-            return redirect('profile')
+
+            return redirect(reverse('profile'))
+
     else:
-        form = CustomUserChangeForm(instance=request.user)
-    return render(request, 'editprofile.html', {'form': form})
+        form = EditProfileForm(instance=request.user)
+
+        var = {'form': form}
+        return render(request, 'editprofile.html', var)

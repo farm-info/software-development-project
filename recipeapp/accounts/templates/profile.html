@@ -28,14 +28,14 @@
             <li>{{ comment.content }} on {{ comment.item.name }}</li>
         {% empty %}
             <li>No previously made comments.</li>
-            <button onlcik="redirectToEditProfile()">
-                <h4>Edit Profile</h4>
+            <button onlcik="redirectToEditProfile()">Edit Profile</button>
+                
                 <script>
                     function redirectToEditProfile() {
                       window.location.href = "editprofile.html";
                     }
                   </script>
-            </button>
+            
         {% endfor %}
         </ul>
     </div>

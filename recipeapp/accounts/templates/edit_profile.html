@@ -12,12 +12,5 @@
             {{ form.as_table }}
         </table>
         <button type="submit">Save</button>
-
-            <script>
-                        
-                function redirectToEditProfile() {
-                    window.location.href = "{% url 'profile' %}";
-                    }
-            </script>
     </form>
 {% endblock content %}

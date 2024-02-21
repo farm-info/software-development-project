@@ -127,6 +127,32 @@ footer {
 
 .reply {}
 
+/* forms */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form table {
+    margin-bottom: 1em;
+}
+
+form th,
+form td {
+    padding-bottom: 1em;
+    padding-right: 1ex;
+}
+
+form th {
+    display: block;
+    text-align: left;
+}
+
+.helptext {
+    font-size: small;
+    color: #666;
+}
+
 /* button */
 /* TODO style them like buttons */
 /* TODO make it consistent */

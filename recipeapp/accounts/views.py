@@ -9,6 +9,7 @@ from django.contrib.auth.forms import UserChangeForm
 from django.urls import reverse
 from .forms import EditProfileForm
 
+
 def login_view(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -38,23 +39,22 @@ def logout_view(request):
     return redirect("home")
 
 
-
 def profile(request):
     return render(request, "profile.html")
 
 
 @login_required
 def editprofile(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = EditProfileForm(request.POST, instance=request.user)
 
         if form.is_valid():
             form.save()
 
-            return redirect(reverse('profile'))
+            return redirect(reverse("profile"))
 
     else:
         form = EditProfileForm(instance=request.user)
 
-        var = {'form': form}
-        return render(request, 'editprofile.html', var)
+        var = {"form": form}
+        return render(request, "editprofile.html", var)

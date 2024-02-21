@@ -7,43 +7,38 @@
 {% url 'editprofile' as editprofile_url %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="text-left">
-        <h2>Profile</h2>
-        <h3>{{ user.username }}</h3>
-        <p class="title">{{ user.get_full_name }}</p>
-        {% if user.profile_picture %}
-            <img src="{{ user.profile_picture.url }}" alt="Profile Picture">
-        {% endif %}
+    <div class="container-fluid">
+        <div class="text-left">
+            <h2>Profile</h2>
+            <h3>{{ user.username }}</h3>
+            <p class="title">{{ user.get_full_name }}</p>
+            {% if user.profile_picture %}<img src="{{ user.profile_picture.url }}" alt="Profile Picture">{% endif %}
             <p>Age: {{ user.age }}</p>
-        <h4>Previously Liked Items</h4>
-        <ul>
-        {% for item in user.liked_items.all %}
-            <li>{{ item.name }}</li>
-        {% empty %}
-            <li>No previously liked items.</li>
-        {% endfor %}
-        </ul>
-        <h4>Previously Made Comments</h4>
-        <ul>
-        {% for comment in user.comments.all %}
-            <li>{{ comment.content }} on {{ comment.item.name }}</li>
-        {% empty %}
-            <li>No previously made comments.</li>
-            <button onclick="redirectToEditProfile()">Edit Profile</button>
-                
-            <script>
+            <h4>Previously Liked Items</h4>
+            <ul>
+                {% for item in user.liked_items.all %}
+                    <li>{{ item.name }}</li>
+                {% empty %}
+                    <li>No previously liked items.</li>
+                {% endfor %}
+            </ul>
+            <h4>Previously Made Comments</h4>
+            <ul>
+                {% for comment in user.comments.all %}
+                    <li>{{ comment.content }} on {{ comment.item.name }}</li>
+                {% empty %}
+                    <li>No previously made comments.</li>
+                    <button onclick="redirectToEditProfile()">Edit Profile</button>
+
+                    <script>
                 function redirectToEditProfile() {
                     window.location.href = "{{ editprofile }}";
                 }
-            </script>
-            
-        {% endfor %}
-        </ul>
+                    </script>
+
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-</div>
 
 {% endblock content %}
-<body>
-
-</body>

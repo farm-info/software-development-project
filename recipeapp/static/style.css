@@ -128,11 +128,6 @@ footer {
 .reply {}
 
 /* forms */
-form {
-    display: flex;
-    flex-direction: column;
-}
-
 form table {
     margin-bottom: 1em;
 }

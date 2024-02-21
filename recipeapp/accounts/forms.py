@@ -4,12 +4,10 @@ from .models import User
 from django import forms
 
 
-
 class FullUserCreationForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
+    class Meta(UserCreationForm.Meta):  # type: ignore
         model = User
         fields = UserCreationForm.Meta.fields + ("first_name", "last_name", "email")  # type: ignore
-        help_text = {"email": "Optional, but used for account recovery."}
 
 
 class EditProfileForm(forms.ModelForm):

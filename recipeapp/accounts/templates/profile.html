@@ -4,8 +4,6 @@
     Profile
 {% endblock title %}
 
-{% url 'editprofile' as editprofile_url %}
-
 {% block content %}
     <div class="container-fluid">
         <div class="text-left">
@@ -32,7 +30,7 @@
 
                     <script>
                         function redirectToEditProfile() {
-                            window.location.href = "{{ editprofile }}";
+                            window.location.href = "{% url 'editprofile' %}";
                         }
                     </script>
 

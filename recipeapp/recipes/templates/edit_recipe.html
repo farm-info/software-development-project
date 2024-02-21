@@ -13,7 +13,8 @@
         <button type="submit">Save</button>
     </form>
 
-    <a class="delete-button button"
-       href="{% url 'delete_recipe' recipe.id %}">Delete</a>
+    <button type="submit"
+            class="delete-button"
+            onclick="window.location.href='{% url 'delete_recipe' recipe.id %}'">Delete</button>
 
 {% endblock content %}

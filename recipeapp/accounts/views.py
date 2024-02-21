@@ -45,7 +45,7 @@ def profile(request):
 
 
 @login_required
-def editprofile(request):
+def edit_profile(request):
     if request.method == "POST":
         form = EditProfileForm(request.POST, instance=request.user)
 
@@ -61,4 +61,4 @@ def editprofile(request):
         form = EditProfileForm(instance=request.user)
 
         var = {"form": form}
-        return render(request, "editprofile.html", var)
+        return render(request, "edit_profile.html", var)

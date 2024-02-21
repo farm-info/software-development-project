@@ -1,3 +1,4 @@
+from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
@@ -52,6 +53,9 @@ def editprofile(request):
             form.save()
 
             return redirect(reverse("profile"))
+
+        else:
+            return HttpResponseBadRequest("Invalid action")
 
     else:
         form = EditProfileForm(instance=request.user)

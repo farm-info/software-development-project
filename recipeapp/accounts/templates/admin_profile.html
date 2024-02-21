@@ -24,14 +24,7 @@
             <li>{{ comment.content }} on {{ comment.item.name }}</li>
         {% empty %}
             <li>No previously made comments.</li>
-            <button onclick="redirectToEditProfile()">Edit Profile</button>
-
-            <script>
-                        function redirectToEditProfile() {
-                            window.location.href = "{% url 'edit_profile' %}";
-                        }
-            </script>
-
+            <button>Edit Profile</button>
         {% endfor %}
     </ul>
 

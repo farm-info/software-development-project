@@ -64,9 +64,6 @@ def edit_profile(request):
         return render(request, "edit_profile.html", var)
 
 
-
-
-
 @login_required
 def admin_profile(request):
     if request.method == "POST":

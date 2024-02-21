@@ -31,14 +31,6 @@
                             window.location.href = "{% url 'edit_profile' %}";
                         }
             </script>
-            
-            <button onclick="redirectToAdminProfile()">Admin Profile</button>
-
-            <script>
-                        function redirectToAdminProfile() {
-                            window.location.href = "{% url 'admin_profile' %}";
-                        }
-            </script>
 
         {% endfor %}
     </ul>

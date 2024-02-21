@@ -20,3 +20,14 @@ class EditProfileForm(forms.ModelForm):
             "bio",
             "profile_picture",
         ]
+
+class AdminProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            "email",
+            "first_name",
+            "last_name",
+            "bio",
+            "profile_picture",
+        ]

@@ -2,7 +2,7 @@ from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
-from .forms import FullUserCreationForm
+from .forms import AdminProfileForm, FullUserCreationForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -62,3 +62,26 @@ def edit_profile(request):
 
         var = {"form": form}
         return render(request, "edit_profile.html", var)
+
+
+
+
+
+@login_required
+def admin_profile(request):
+    if request.method == "POST":
+        form =  AdminProfileForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect(reverse("profile"))
+
+        else:
+            return HttpResponseBadRequest("Invalid action")
+
+    else:
+        form = AdminProfileForm(instance=request.user)
+
+        var = {"form": form}
+        return render(request, "admin_profile.html", var)

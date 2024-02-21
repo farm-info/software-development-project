@@ -70,7 +70,7 @@ def edit_profile(request):
 @login_required
 def admin_profile(request):
     if request.method == "POST":
-        form =  AdminProfileForm(request.POST, instance=request.user)
+        form = AdminProfileForm(request.POST, instance=request.user)
 
         if form.is_valid():
             form.save()

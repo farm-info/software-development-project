@@ -26,13 +26,7 @@
             <li>No previously made comments.</li>
             <button onclick="redirectToEditProfile()">Edit Profile</button>
 
-            <script>
-                        function redirectToEditProfile() {
-                            window.location.href = "{% url 'edit_profile' %}";
-                        }
-            </script>
-
-            <button onclick="window.location.href = '{% url 'admin_profile' %}'">Admin Profile</button>
+            
 
         {% endfor %}
     </ul>

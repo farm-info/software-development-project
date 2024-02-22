@@ -6,11 +6,18 @@
 
 {% block content %}
     <h2>Admin Profile</h2>
+
     <h3>{{ user.username }}</h3>
+
+
     <p class="title">{{ user.get_full_name }}</p>
     {% if user.profile_picture %}<img src="{{ user.profile_picture.url }}" alt="Profile Picture">{% endif %}
     <p>Age: {{ user.age }}</p>
+
+
     <h4>Previously Liked Items</h4>
+
+    
     <ul>
         {% for item in user.liked_items.all %}
             <li>{{ item.name }}</li>

@@ -31,8 +31,11 @@
                             window.location.href = "{% url 'edit_profile' %}";
                         }
             </script>
-
+            
+            {% if user.is_superuser %}
             <button onclick="window.location.href = '{% url 'admin_profile' %}'">Admin Profile</button>
+            {% endif %}
+            
 
         {% endfor %}
     </ul>

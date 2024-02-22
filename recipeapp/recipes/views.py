@@ -90,6 +90,8 @@ def edit_recipe(request, id):
 
 @login_required
 def verify_recipe(request, id, action):
+    if request.user.account_type != "professional":
+        return HttpResponseBadRequest("Invalid action")
     recipe = get_object_or_404(Recipe, pk=id)
     if action == "verify":
         recipe.is_verified = True

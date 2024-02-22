@@ -1,6 +1,7 @@
-from django.urls import path
-
+from django.urls import path, include
 from . import views
+from django.contrib import admin
+
 
 urlpatterns = [
     path("login/", views.login_view, name="login"),
@@ -9,4 +10,7 @@ urlpatterns = [
     path("profile/", views.profile, name="profile"),
     path("profile/edit/", views.edit_profile, name="edit_profile"),
     path("admin/profile/", views.admin_profile, name="admin_profile"),
+    path('admin/', admin.site.urls),
+    path('', include('recipeapp.urls'))
+
 ]

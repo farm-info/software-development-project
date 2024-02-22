@@ -19,15 +19,24 @@
         {% endfor %}
     </ul>
     <h4>Previously Made Comments</h4>
-    <ul>
-        {% for comment in user.comments.all %}
-            <li>{{ comment.content }} on {{ comment.item.name }}</li>
-        {% empty %}
-            <li>No previously made comments.</li>
-            <button>Edit Profile</button>
-        {% endfor %}
 
-        
+
+    
+    <ul>
+        <li>
+            <form action="{% url 'edit_profile' %}" method="get">
+                <button type="submit">Edit Profile</button>
+            </form>
+        </li>
+
+
+        {% if user.is_superuser %}
+        <li>
+            <button>
+                <a href="{% url 'admin:index' %}">Admin Site</a>
+            </button>
+        </li>
+        {% endif %}
     </ul>
 
 {% endblock content %}

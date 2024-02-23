@@ -52,7 +52,7 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
 
-            return redirect(reverse("profile"))
+            return redirect(reverse("admin_profile"))
 
         else:
             return HttpResponseBadRequest("Invalid action")
@@ -82,3 +82,15 @@ def admin_profile(request):
 
         var = {"form": form}
         return render(request, "admin_profile.html", var)
+
+
+def your_view(request):
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        if action == 'admin_profile':
+            return redirect('admin_profile')
+        else:
+            return redirect('your_previous_page')
+    else:
+        context = {}
+        return render(request, 'your_form_template.html', context)

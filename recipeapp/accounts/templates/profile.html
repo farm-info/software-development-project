@@ -19,16 +19,13 @@
         {% endfor %}
     </ul>
     <h4>Previously Made Comments</h4>
+
     <ul>
-        {% for comment in user.comments.all %}
-            <li>{{ comment.content }} on {{ comment.item.name }}</li>
-        {% empty %}
-            <li>No previously made comments.</li>
-            <button onclick="redirectToEditProfile()">Edit Profile</button>
-
-            
-
-        {% endfor %}
+        <li>
+            <form action="{% url 'edit_profile' %}" method="get">
+                <button type="submit">Edit Profile</button>
+            </form>
+        </li>
     </ul>
 
 {% endblock content %}

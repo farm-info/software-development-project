@@ -30,12 +30,17 @@
     <ul>
         {% for item in user.liked_items.all %}
             <li>{{ item.name }}</li>
+
+
         {% empty %}
             <li>No previously liked items.</li>
         {% endfor %}
     </ul>
-    <h4>Previously Made Comments</h4>
 
+
+
+    <h4>Previously Made Comments</h4>
+        
 
     
     <ul>

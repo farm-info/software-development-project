@@ -23,7 +23,7 @@ class User(AbstractUser):
     )
     bio = models.TextField(blank=True)
     profile_picture = models.ImageField(
-        upload_to="media/profile_pictures/", null=True, blank=True
+        upload_to="profile_pictures/", null=True, blank=True
     )
     date_of_birth = models.DateField(null=True, blank=True)
 

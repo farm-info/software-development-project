@@ -2,7 +2,7 @@ from django import forms
 from .models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from django import forms
+from datetime import datetime
 
 
 class FullUserCreationForm(UserCreationForm):
@@ -20,7 +20,13 @@ class EditProfileForm(forms.ModelForm):
             "last_name",
             "bio",
             "profile_picture",
+            "date_of_birth",
         ]
+        widgets = {
+            "date_of_birth": forms.SelectDateWidget(
+                years=range(1900, datetime.now().year)
+            ),
+        }
 
 
 class AdminProfileForm(forms.ModelForm):
@@ -33,3 +39,8 @@ class AdminProfileForm(forms.ModelForm):
             "bio",
             "profile_picture",
         ]
+        widgets = {
+            "date_of_birth": forms.SelectDateWidget(
+                years=range(1900, datetime.now().year)
+            ),
+        }

@@ -85,12 +85,12 @@ def admin_profile(request):
 
 
 def your_view(request):
-    if request.method == 'POST':
-        action = request.POST.get('action')
-        if action == 'admin_profile':
-            return redirect('admin_profile')
+    if request.method == "POST":
+        action = request.POST.get("action")
+        if action == "admin_profile":
+            return redirect("admin_profile")
         else:
-            return redirect('your_previous_page')
+            return redirect("your_previous_page")
     else:
         context = {}
-        return render(request, 'your_form_template.html', context)
+        return render(request, "your_form_template.html", context)

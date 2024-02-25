@@ -11,7 +11,7 @@ body {
 }
 
 main {
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     flex-grow: 1;
@@ -62,12 +62,12 @@ footer {
 }
 
 /* recipe card */
-/* TODO limit recipe card size */
 .recipe-card {
     background-color: #fff;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 
+    width: 100%;
     padding: 20px;
     margin-bottom: 20px;
 }

@@ -21,6 +21,7 @@ class EditProfileForm(forms.ModelForm):
             "profile_picture",
         ]
 
+
 class AdminProfileForm(forms.ModelForm):
     class Meta:
         model = User

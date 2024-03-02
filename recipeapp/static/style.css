@@ -23,6 +23,8 @@ body {
 
 main {
     max-width: 800px;
+    width: 100%;
+    box-sizing: border-box;
     margin: 0 auto;
     padding: 20px;
     flex-grow: 1;

@@ -30,6 +30,12 @@ main {
     flex-grow: 1;
 }
 
+@media (max-width: 480px) {
+    main {
+        padding: 20px 10px;
+    }
+}
+
 /* nav */
 nav {
     background-color: var(--primary);
@@ -81,6 +87,7 @@ footer {
     border-radius: 10px;
 
     width: 100%;
+    box-sizing: border-box;
     padding: 20px;
     margin-bottom: 20px;
 }

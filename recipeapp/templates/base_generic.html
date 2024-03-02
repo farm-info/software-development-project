@@ -21,7 +21,10 @@
         <nav>
             <ul>
                 <li>
-                    <a href="{% url 'home' %}">FoodManJones</a>
+                    <a href="{% url 'home' %}" class="logo">
+                        <img src="{% static "kawaii-noodle.png" %}" alt="logo">
+                        <div>&nbsp;FoodManJones</div>
+                    </a>
                 </li>
                 <div class="spacer"></div>
                 {% comment %} TODO check if user is logged in {% endcomment %}
@@ -65,6 +68,7 @@
 
         <footer>
             <p>All rights reserved.</p>
+            <a target="_blank" href="https://icons8.com/icon/118849/kawaii-noodle">Kawaii Noodle</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
         </footer>
     </body>
 

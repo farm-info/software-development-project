@@ -5,6 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% load static %}
         <link rel="stylesheet" href="{% static 'style.css' %}">
+        <style>
+            @font-face {
+                font-family: 'Vollkorn';
+                src: local('Vollkorn'),
+                    url('{% static 'fonts/Vollkorn-VariableFont_wght.ttf' %}') format("truetype");
+            }
+        </style>
 
         <meta name="description"
               content="{% block description %}Discover, find, and create recipes at your fingertips.{% endblock description %}">

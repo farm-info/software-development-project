@@ -1,19 +1,36 @@
 /* color scheme */
 :root {
-    --primary: #222;
-    --secondary: #f5f5f5;
-    --accent: #f00;
+    --text: #f7f6bb;
 
-    --button: #222;
-    --button-hover: #555;
-    --button-text: #fff;
+    --background-header-footer: #003322;
+    --background-body: #09251d;
+    --background-content: #114131;
+
+    --primary: #75961a;
+    --primary-brght: #88aa22;
+    --secondary: #fcdd2c;
+    --accent: #32dd02;
+
+    --heading: var(--secondary);
+    --heading-hover: #ecbf06;
+    --heading-active: #cb9503;
+
+    --text: #F7F6BB;
+    --text-light: #c2c2c2;
+
+    --button: var(--primary);
+    --button-hover: #597318;
+    --button-active: #485b19;
+    --button-text: var(--text);
+
+    --font: Georgia, 'Times New Roman', Times, serif;
 }
 
 /* global styles */
 body {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    background-color: var(--secondary);
-    color: var(--primary);
+    font-family: var(--font);
+    background-color: var(--background-body);
+    color: var(--text);
 
     min-height: 100vh;
     display: flex;
@@ -36,9 +53,13 @@ main {
     }
 }
 
+a {
+    color: var(--primary-brght);
+}
+
 /* nav */
 nav {
-    background-color: var(--primary);
+    background-color: var(--background-header-footer);
 }
 
 nav ul {
@@ -51,15 +72,13 @@ nav ul {
 }
 
 nav ul li {
-    display: inline-block;
+    display: flex;
+    align-items: center;
     margin-right: 10px;
 }
 
-nav ul .spacer {
-    margin-right: auto;
-}
-
 nav ul li a {
+    line-height: 1;
     text-decoration: none;
 
     color: var(--button-text);
@@ -67,14 +86,26 @@ nav ul li a {
     border-radius: 3px;
 }
 
-nav ul li a:hover {
-    background-color: #555;
+nav ul .spacer {
+    margin-right: auto;
+}
+
+nav ul li .logo {
+    color: var(--accent);
+    height: 1.5em;
+    display: flex;
+    align-items: center;
+}
+
+nav ul li .logo img {
+    height: 100%;
+    width: auto;
 }
 
 /* footer */
 footer {
-    background-color: var(--primary);
-    color: var(--secondary);
+    background-color: var(--background-header-footer);
+    color: var(--text);
 
     text-align: center;
     padding: 10px;
@@ -82,7 +113,7 @@ footer {
 
 /* recipe card */
 .recipe-card {
-    background-color: #fff;
+    background-color: var(--background-content);
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 
@@ -90,6 +121,26 @@ footer {
     box-sizing: border-box;
     padding: 20px;
     margin-bottom: 20px;
+}
+
+@media (max-width: 480px) {
+    .recipe-card {
+        padding: 20px 10px;
+    }
+}
+
+.recipe-card h2,
+.recipe-card a {
+    color: var(--heading);
+    margin-top: 0;
+}
+
+.recipe-card a:hover {
+    color: var(--heading-hover);
+}
+
+.recipe-card a:active {
+    color: var(--heading-active);
 }
 
 .recipe-card h3 {
@@ -165,28 +216,41 @@ form th {
 
 .helptext {
     font-size: small;
-    color: #666;
+    color: var(--text-light);
 }
 
 /* button */
 /* TODO style them like buttons */
 /* TODO make it consistent */
-button,
-.button {
+button {
     padding: 5px;
     border-radius: 3px;
 
     background-color: var(--button);
     color: var(--button-text);
 
+    font-family: var(font);
     border: none;
-    text-decoration: none;
-    font-size: 1em;
+    /* font-size: 1em; */
 
     cursor: pointer;
 }
 
+button,
+nav ul li a {
+    transition: background-color 0.1s;
+    transition: box-shadow 0.1s;
+    box-shadow: none;
+}
+
 button:hover,
-.button:hover {
+nav ul li a:hover {
     background-color: var(--button-hover);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:active,
+nav ul li a:active {
+    background-color: var(--button-active);
+    box-shadow: none;
 }

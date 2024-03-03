@@ -74,7 +74,7 @@ def upload_recipe(request):
             new_recipe = form.save(commit=False)
             new_recipe.author = request.user
             new_recipe.save()
-            return redirect("recipe", id=new_recipe.id)
+            return redirect("recipe", recipe_id=new_recipe.id)
     else:
         form = RecipeForm()
     return render(request, "upload_recipe.html", {"form": form})
@@ -87,7 +87,7 @@ def edit_recipe(request, recipe_id):
         form = RecipeForm(request.POST, instance=editing_recipe)
         if form.is_valid():
             editing_recipe = form.save()
-            return redirect("recipe", id=editing_recipe.id)
+            return redirect("recipe", recipe_id=editing_recipe.id)
         else:
             return HttpResponseBadRequest("Invalid action")
 
@@ -107,7 +107,7 @@ def verify_recipe(request, recipe_id, action):
     else:
         return HttpResponseBadRequest("Invalid action")
     editing_recipe.save()
-    return redirect("recipe", id=recipe_id)
+    return redirect("recipe", recipe_id=recipe_id)
 
 
 @login_required

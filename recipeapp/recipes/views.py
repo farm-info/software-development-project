@@ -53,9 +53,14 @@ def add_comment(request):
         Comment.objects.get(id=parent_comment_id) if parent_comment_id else None
     )
     text = request.POST["text"]
+    rating = request.POST["rating"]
 
     comment = Comment(
-        author=author, recipe=recipe, parent_comment_id=parent_comment, text=text
+        author=author,
+        recipe=recipe,
+        parent_comment_id=parent_comment,
+        text=text,
+        rating=rating,
     )
     comment.save()
     return redirect(request.META.get("HTTP_REFERER", "home"))

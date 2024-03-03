@@ -2,7 +2,10 @@
 
 {% for comment in comments %}
     <div class="comment">
-        <div class="comment-author">{{ comment.author }}</div>
+        <div>
+            <span class="comment-author">{{ comment.author }}</span>
+            {% if comment.rating %}<span class="comment-rating">&nbsp;&nbsp; ★ {{ comment.rating }}</span>{% endif %}
+        </div>
         <div class="comment-date">{{ comment.created_date }}</div>
         <div class="comment-text">{{ comment.text }}</div>
         <form action="{% url 'add_comment' %}" method="post">

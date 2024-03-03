@@ -65,6 +65,13 @@
         {% endif %}
 
         <p>{{ recipe.description|linebreaks }}</p>
+
+        {% if recipe.time_minutes %}
+            <p>
+                <b>Time:</b> {{ recipe.time_minutes }} minutes
+            </p>
+        {% endif %}
+
         <section>
             <h4>Ingredients</h4>
             <ul>

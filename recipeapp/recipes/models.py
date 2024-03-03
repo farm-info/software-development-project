@@ -71,7 +71,7 @@ class Notification(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
     comment = models.ForeignKey(
-        Comment, null=True, on_delete=models.CASCADE, related_name="replies"
+        Comment, null=True, on_delete=models.CASCADE, related_name="notif_comment"
     )
     like = models.ForeignKey(Like, null=True, on_delete=models.CASCADE)
 

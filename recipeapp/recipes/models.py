@@ -59,3 +59,22 @@ class Comment(models.Model):
     parent_comment_id = models.ForeignKey(
         "self", null=True, on_delete=models.CASCADE, related_name="replies"
     )
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_date = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+    comment = models.ForeignKey(
+        Comment, null=True, on_delete=models.CASCADE, related_name="replies"
+    )
+    like = models.ForeignKey(Like, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                check=models.Q(comment__isnull=False, like__isnull=True)
+                | models.Q(comment__isnull=True, like__isnull=False),
+                name="comment_xor_like",
+            ),
+        ]

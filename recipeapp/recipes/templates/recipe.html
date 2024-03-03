@@ -29,31 +29,33 @@
             <br>
         </form>
 
-        {% if request.user == recipe.author %}
-            <button class="edit-button button"
-                    onclick="window.location.href='{% url 'edit_recipe' recipe.id %}'">Edit</button>
-        {% endif %}
-
-        {% if request.user.account_type == "admin" or request.user == recipe.author %}
-            {% comment %} TODO comfirmation popup? {% endcomment %}
-            <button class="delete-button button"
-                    onclick="window.location.href='{% url 'delete_recipe' recipe.id %}'">Delete</button>
-        {% endif %}
-
-        {% if request.user.account_type == "professional" %}
-            {% comment %} TODO comfirmation popup? {% endcomment %}
-            {% if recipe.is_verified %}
-                <button class="unverify-button button"
-                        onclick="window.location.href='{% url 'verify_recipe' recipe.id 'unverify' %}'">
-                    Unverify recipe
-                </button>
-            {% else %}
-                <button class="verify-button button"
-                        onclick="window.location.href='{% url 'verify_recipe' recipe.id 'verify' %}'">
-                    Verify recipe
-                </button>
+        <div class="recipe-management">
+            {% if request.user == recipe.author %}
+                <button class="edit-button button"
+                        onclick="window.location.href='{% url 'edit_recipe' recipe.id %}'">Edit</button>
             {% endif %}
-        {% endif %}
+
+            {% if request.user.account_type == "admin" or request.user == recipe.author %}
+                {% comment %} TODO comfirmation popup? {% endcomment %}
+                <button class="delete-button button"
+                        onclick="window.location.href='{% url 'delete_recipe' recipe.id %}'">Delete</button>
+            {% endif %}
+
+            {% if request.user.account_type == "professional" %}
+                {% comment %} TODO comfirmation popup? {% endcomment %}
+                {% if recipe.is_verified %}
+                    <button class="unverify-button button"
+                            onclick="window.location.href='{% url 'verify_recipe' recipe.id 'unverify' %}'">
+                        Unverify recipe
+                    </button>
+                {% else %}
+                    <button class="verify-button button"
+                            onclick="window.location.href='{% url 'verify_recipe' recipe.id 'verify' %}'">
+                        Verify recipe
+                    </button>
+                {% endif %}
+            {% endif %}
+        </div>
 
         {% if recipe.photo %}
             <img src="{{ recipe.photo.url }}"
@@ -65,6 +67,13 @@
         {% endif %}
 
         <p>{{ recipe.description|linebreaks }}</p>
+
+        {% if recipe.time_minutes %}
+            <p>
+                <b>Time:</b> {{ recipe.time_minutes }} minutes
+            </p>
+        {% endif %}
+
         <section>
             <h4>Ingredients</h4>
             <ul>
@@ -84,7 +93,8 @@
         <form action="{% url 'add_comment' %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
-            <input type="text" name="text" placeholder="Add a comment">
+            <input type="text" name="text" placeholder="Add a comment" required>
+            <input type="number" name="rating" placeholder="Rating" min="1" max="5">
             <button type="submit">Add</button>
         </form>
     </section>

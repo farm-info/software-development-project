@@ -1,9 +1,5 @@
 /* color scheme */
 :root {
-
-
-
-    
     --text: #f7f6bb;
 
     --background-header-footer: #003322;
@@ -203,7 +199,10 @@ footer {
 /* unused for now */
 .comment-author {}
 
-.comment-date {}
+.comment-date {
+    font-size: small;
+    color: var(--text-light);
+}
 
 .comment-text {}
 

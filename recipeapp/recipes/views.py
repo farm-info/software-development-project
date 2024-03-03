@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Exists, OuterRef, Value
+from django.http import HttpResponseBadRequest
 from .models import Recipe, Like, Comment
 from .forms import RecipeForm
-from django.http import HttpResponseBadRequest
 
 
 def home(request):
@@ -24,10 +24,12 @@ def search(request):
     return render(request, "search.html", {"results": results})
 
 
-def recipe(request, id):
-    recipe = get_object_or_404(Recipe, pk=id)
-    comments = Comment.objects.filter(recipe=recipe, parent_comment_id=None)
-    return render(request, "recipe.html", {"recipe": recipe, "comments": comments})
+def recipe(request, recipe_id):
+    requested_recipe = get_object_or_404(Recipe, pk=recipe_id)
+    comments = Comment.objects.filter(recipe=requested_recipe, parent_comment_id=None)
+    return render(
+        request, "recipe.html", {"recipe": requested_recipe, "comments": comments}
+    )
 
 
 @login_required
@@ -51,9 +53,14 @@ def add_comment(request):
         Comment.objects.get(id=parent_comment_id) if parent_comment_id else None
     )
     text = request.POST["text"]
+    rating = request.POST["rating"]
 
     comment = Comment(
-        author=author, recipe=recipe, parent_comment_id=parent_comment, text=text
+        author=author,
+        recipe=recipe,
+        parent_comment_id=parent_comment,
+        text=text,
+        rating=rating,
     )
     comment.save()
     return redirect(request.META.get("HTTP_REFERER", "home"))
@@ -64,47 +71,49 @@ def upload_recipe(request):
     if request.method == "POST":
         form = RecipeForm(request.POST, request.FILES)
         if form.is_valid():
-            recipe = form.save(commit=False)
-            recipe.author = request.user
-            recipe.save()
-            return redirect("recipe", id=recipe.id)
+            new_recipe = form.save(commit=False)
+            new_recipe.author = request.user
+            new_recipe.save()
+            return redirect("recipe", recipe_id=new_recipe.id)
     else:
         form = RecipeForm()
     return render(request, "upload_recipe.html", {"form": form})
 
 
 @login_required
-def edit_recipe(request, id):
-    recipe = get_object_or_404(Recipe, pk=id)
+def edit_recipe(request, recipe_id):
+    editing_recipe = get_object_or_404(Recipe, pk=recipe_id)
     if request.method == "POST":
-        form = RecipeForm(request.POST, instance=recipe)
+        form = RecipeForm(request.POST, instance=editing_recipe)
         if form.is_valid():
-            recipe = form.save()
-            return redirect("recipe", id=recipe.id)
+            editing_recipe = form.save()
+            return redirect("recipe", recipe_id=editing_recipe.id)
         else:
             return HttpResponseBadRequest("Invalid action")
 
-    form = RecipeForm(instance=recipe)
-    return render(request, "edit_recipe.html", {"form": form, "recipe": recipe})
+    form = RecipeForm(instance=editing_recipe)
+    return render(request, "edit_recipe.html", {"form": form, "recipe": editing_recipe})
 
 
 @login_required
-def verify_recipe(request, id, action):
+def verify_recipe(request, recipe_id, action):
     if request.user.account_type != "professional":
         return HttpResponseBadRequest("Invalid action")
-    recipe = get_object_or_404(Recipe, pk=id)
+    editing_recipe = get_object_or_404(Recipe, pk=recipe_id)
     if action == "verify":
-        recipe.is_verified = True
+        editing_recipe.is_verified = True
     elif action == "unverify":
-        recipe.is_verified = False
+        editing_recipe.is_verified = False
     else:
         return HttpResponseBadRequest("Invalid action")
-    recipe.save()
-    return redirect("recipe", id=id)
+    editing_recipe.save()
+    return redirect("recipe", recipe_id=recipe_id)
 
 
 @login_required
-def delete_recipe(request, id):
-    recipe = get_object_or_404(Recipe, pk=id)
-    recipe.delete()
+def delete_recipe(request, recipe_id):
+    editing_recipe = get_object_or_404(Recipe, pk=recipe_id)
+    if editing_recipe.author != request.user:
+        return HttpResponseBadRequest("Invalid action")
+    editing_recipe.delete()
     return redirect("home")

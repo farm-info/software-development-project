@@ -94,3 +94,17 @@ def your_view(request):
     else:
         context = {}
         return render(request, "your_form_template.html", context)
+
+
+# Add an additional blank line before the function definition
+def admin_register(request):
+    if request.method == "POST":
+        action = request.POST.get("action")
+        if action == "admin_profile":
+            return redirect("admin_register")
+        else:
+            return redirect("your_previous_page")
+    else:
+        context = {}
+        return render(request, "your_form_template.html", context)
+

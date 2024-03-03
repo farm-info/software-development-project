@@ -49,6 +49,16 @@
                 </button>
             </li>
         {% endif %}
+
+
+
+        {% if user.is_superuser %}
+            <li>
+                <form action="{% url 'admin_register' %}" method="get">
+                    <button>Register a new Admin</button>
+                </form>
+            </li>
+        {%endif%}
     </ul>
 
 {% endblock content %}

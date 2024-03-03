@@ -37,15 +37,17 @@
                 <div class="spacer"></div>
 
                 <li>
-                    <a href="{% url 'upload_recipe' %}">New recipe</a>
-                </li>
-
-                <li>
-                    <!-- TODO check for notifications -->
-                    <a href="{% url 'notifications' %}">Notifications</a>
+                    <a href="{% url 'upload_recipe' %}">Upload</a>
                 </li>
 
                 {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'notifications' %}">Notifications
+                            &nbsp;
+                            {% if notifications %}<span class="badge"></span>{% endif %}
+                        </a>
+                    </li>
+
                     {% if not user.is_superuser %}
                         <li>
                             <a href="{% url 'profile' %}">Profile</a>

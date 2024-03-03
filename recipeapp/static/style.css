@@ -92,6 +92,9 @@ nav ul li a {
     color: var(--button-text);
     padding: 5px;
     border-radius: 3px;
+
+    display: flex;
+    align-items: center;
 }
 
 nav ul .spacer {
@@ -101,8 +104,6 @@ nav ul .spacer {
 nav ul li .logo {
     color: var(--accent);
     height: 1.5em;
-    display: flex;
-    align-items: center;
 }
 
 nav ul li .logo img {
@@ -207,6 +208,14 @@ footer {
 .comment-text {}
 
 .reply {}
+
+.badge {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background-color: red;
+    border-radius: 50%;
+}
 
 /* forms */
 form table {

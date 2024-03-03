@@ -13,7 +13,12 @@ class Recipe(models.Model):
     is_verified = models.BooleanField(default=False)
     photo = models.ImageField(upload_to="photos/", null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    time_minutes = models.PositiveSmallIntegerField(null=True, blank=True)
+    time_minutes = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
+        verbose_name="Time to cook",
+        help_text="in minutes",
+    )
     ingredients = models.TextField()
     steps = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)

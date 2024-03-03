@@ -29,31 +29,33 @@
             <br>
         </form>
 
-        {% if request.user == recipe.author %}
-            <button class="edit-button button"
-                    onclick="window.location.href='{% url 'edit_recipe' recipe.id %}'">Edit</button>
-        {% endif %}
-
-        {% if request.user.account_type == "admin" or request.user == recipe.author %}
-            {% comment %} TODO comfirmation popup? {% endcomment %}
-            <button class="delete-button button"
-                    onclick="window.location.href='{% url 'delete_recipe' recipe.id %}'">Delete</button>
-        {% endif %}
-
-        {% if request.user.account_type == "professional" %}
-            {% comment %} TODO comfirmation popup? {% endcomment %}
-            {% if recipe.is_verified %}
-                <button class="unverify-button button"
-                        onclick="window.location.href='{% url 'verify_recipe' recipe.id 'unverify' %}'">
-                    Unverify recipe
-                </button>
-            {% else %}
-                <button class="verify-button button"
-                        onclick="window.location.href='{% url 'verify_recipe' recipe.id 'verify' %}'">
-                    Verify recipe
-                </button>
+        <div class="recipe-management">
+            {% if request.user == recipe.author %}
+                <button class="edit-button button"
+                        onclick="window.location.href='{% url 'edit_recipe' recipe.id %}'">Edit</button>
             {% endif %}
-        {% endif %}
+
+            {% if request.user.account_type == "admin" or request.user == recipe.author %}
+                {% comment %} TODO comfirmation popup? {% endcomment %}
+                <button class="delete-button button"
+                        onclick="window.location.href='{% url 'delete_recipe' recipe.id %}'">Delete</button>
+            {% endif %}
+
+            {% if request.user.account_type == "professional" %}
+                {% comment %} TODO comfirmation popup? {% endcomment %}
+                {% if recipe.is_verified %}
+                    <button class="unverify-button button"
+                            onclick="window.location.href='{% url 'verify_recipe' recipe.id 'unverify' %}'">
+                        Unverify recipe
+                    </button>
+                {% else %}
+                    <button class="verify-button button"
+                            onclick="window.location.href='{% url 'verify_recipe' recipe.id 'verify' %}'">
+                        Verify recipe
+                    </button>
+                {% endif %}
+            {% endif %}
+        </div>
 
         {% if recipe.photo %}
             <img src="{{ recipe.photo.url }}"

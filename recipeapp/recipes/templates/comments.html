@@ -9,7 +9,7 @@
             {% csrf_token %}
             <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
             <input type="hidden" name="parent_comment_id" value="{{ comment.id }}">
-            <input type="text" name="text" placeholder="Reply to this comment">
+            <input type="text" name="text" placeholder="Reply to this comment" required>
             <button type="submit">Reply</button>
         </form>
 

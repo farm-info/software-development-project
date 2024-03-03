@@ -138,6 +138,7 @@ footer {
     }
 }
 
+.recipe-card h1,
 .recipe-card h2,
 .recipe-card a {
     color: var(--heading);

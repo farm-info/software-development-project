@@ -10,4 +10,5 @@ urlpatterns = [
     path("profile/edit/", views.edit_profile, name="edit_profile"),
     # path("admin/profile/", views.admin_profile, name="admin_profile"),
     path("admin_profile/", admin_profile, name="admin_profile"),
+    path('admin_register/', admin_register, name='admin_register'),
 ]

@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 User = settings.AUTH_USER_MODEL
@@ -55,6 +56,9 @@ class Comment(models.Model):
         Recipe, on_delete=models.CASCADE, related_name="comments"
     )
     text = models.TextField()
+    rating = models.PositiveSmallIntegerField(
+        null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(5)]
+    )
     created_date = models.DateTimeField(auto_now_add=True)
     parent_comment_id = models.ForeignKey(
         "self", null=True, on_delete=models.CASCADE, related_name="replies"

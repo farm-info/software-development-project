@@ -20,6 +20,8 @@
                     <a href="{% url "recipe" notification.comment.recipe.id %}">{{ notification.comment.recipe.title }}</a>
                 {% endif %}
             </li>
+        {% empty %}
+            <li>No unread notifications</li>
         {% endfor %}
     </ul>
 {% endblock content %}

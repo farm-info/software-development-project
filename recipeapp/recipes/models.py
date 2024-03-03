@@ -55,6 +55,10 @@ class Like(models.Model):
             "recipe",
         )
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        Notification.objects.create(user=self.user, like=self)
+
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -70,14 +74,18 @@ class Comment(models.Model):
         "self", null=True, on_delete=models.CASCADE, related_name="replies"
     )
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        Notification.objects.create(user=self.author, comment=self)
+
 
 class Notification(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="notifications"
+    )
     created_date = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
-    comment = models.ForeignKey(
-        Comment, null=True, on_delete=models.CASCADE, related_name="notif_comment"
-    )
+    comment = models.ForeignKey(Comment, null=True, on_delete=models.CASCADE)
     like = models.ForeignKey(Like, null=True, on_delete=models.CASCADE)
 
     class Meta:

@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block title %}
+    Notifications
+{% endblock title %}
+
+{% block content %}
+    <h1>Unread notifications</h1>
+    <a href="{% url "mark_notifications_read" %}">Mark all as read</a>
+    <ul>
+        {% for notification in notifications %}
+            <li>
+                {{ notification.user }}
+                {% if notification.like %}
+                    liked your recipe
+                    <a href="{% url "recipe" notification.like.recipe.id %}">{{ notification.like.recipe.title }}</a>
+                {% else %}
+                    commented on your recipe
+                    <a href="{% url "recipe" notification.comment.recipe.id %}">{{ notification.comment.recipe.title }}</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

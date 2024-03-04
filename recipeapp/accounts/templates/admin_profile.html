@@ -48,17 +48,12 @@
                     <a target="_blank" href="{% url 'admin:index' %}">Admin Site</a>
                 </button>
             </li>
-        {% endif %}
 
-
-
-        {% if user.is_superuser %}
             <li>
-                <form action="{% url 'admin_register' %}" method="get">
-                    <button>Register a new Admin</button>
-                </form>
+                <a href="{% url 'admin_register' %}">Register a new admin</a>
             </li>
-        {%endif%}
-    </ul>
+
+            {% endif %}
+        </ul>
 
 {% endblock content %}

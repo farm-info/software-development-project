@@ -8,9 +8,6 @@
 
     <h2>Admin Register</h2>
 
-    {% if user.is_superuser %}
-    <p>You are already an admin.</p>
-    {% else %}
 
     <form method="post" action="{% url 'register' %}">
         {% csrf_token %}

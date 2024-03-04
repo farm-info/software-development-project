@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import Exists, OuterRef, Value
+from django.db.models import Exists, OuterRef, Value, Q
 from django.http import HttpResponseBadRequest
 from .models import Recipe, Like, Comment
 from .forms import RecipeForm
@@ -117,3 +117,19 @@ def delete_recipe(request, recipe_id):
         return HttpResponseBadRequest("Invalid action")
     editing_recipe.delete()
     return redirect("home")
+
+
+@login_required
+def notifications(request):
+    # WONTFIX unoptimized code
+    notifications = request.user.notifications.filter(is_read=False)
+    notifications = notifications.filter(
+        Q(comment__recipe__author=request.user) | Q(like__recipe__author=request.user)
+    )
+    return render(request, "notifications.html", {"notifications": notifications})
+
+
+@login_required
+def mark_notifications_read(request):
+    request.user.notifications.update(is_read=True)
+    return redirect("notifications")

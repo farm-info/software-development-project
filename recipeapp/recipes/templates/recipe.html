@@ -8,14 +8,18 @@
 {% block content %}
 
     <article class="recipe recipe-card">
-        <h2>
+        <h1>
             {{ recipe.title }}
             {% if recipe.is_verified %}
                 <img src="{% static "verification.svg" %}" class="icon" alt="verified">
             {% endif %}
-        </h2>
-        <h3>By {{ recipe.author }}</h3>
-        <p>{{ recipe.created_date|date:"F j, Y" }}</p>
+        </h1>
+        <p>
+            <b>By</b> {{ recipe.author }}
+        </p>
+        <p>
+            <b>Uploaded on</b> {{ recipe.created_date|date:"F j, Y" }}
+        </p>
 
         <form action="{% url 'like_recipe' %}" method="post">
             {% csrf_token %}
@@ -70,7 +74,7 @@
 
         {% if recipe.time_minutes %}
             <p>
-                <b>Time:</b> {{ recipe.time_minutes }} minutes
+                <b>Time to cook is</b> {{ recipe.time_minutes }} minutes
             </p>
         {% endif %}
 

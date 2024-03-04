@@ -33,12 +33,21 @@
                         <div>&nbsp;FoodManJones</div>
                     </a>
                 </li>
+
                 <div class="spacer"></div>
-                {% comment %} TODO check if user is logged in {% endcomment %}
+
+                <li>
+                    <a href="{% url 'upload_recipe' %}">Upload</a>
+                </li>
+
                 {% if user.is_authenticated %}
                     <li>
-                        <a href="{% url 'logout' %}">Logout</a>
+                        <a href="{% url 'notifications' %}">Notifications
+                            &nbsp;
+                            {% if notifications %}<span class="badge"></span>{% endif %}
+                        </a>
                     </li>
+
                     {% if not user.is_superuser %}
                         <li>
                             <a href="{% url 'profile' %}">Profile</a>
@@ -51,6 +60,10 @@
                         </li>
                     {% endif %}
 
+                    <li>
+                        <a href="{% url 'logout' %}">Logout</a>
+                    </li>
+
                 {% else %}
                     <li>
                         <a href="{% url 'login' %}">Login</a>
@@ -59,9 +72,6 @@
                         <a href="{% url 'register' %}">Register</a>
                     </li>
                 {% endif %}
-                <li>
-                    <a href="{% url 'upload_recipe' %}">New recipe</a>
-                </li>
             </ul>
         </nav>
 

@@ -1,27 +1,14 @@
 {% extends "base_generic.html" %}
 
 {% block title %}
-    search results for {{ query }}
+    {{ query }} | search
 {% endblock title %}
 
 {% block content %}
 
-    <h2>FoodManJones?</h2>
-    <a href="{% url 'upload_recipe' %}">Upload a new recipe</a>
-
-    {% for recipe in results %}
-        <div class="post">
-            <h2>
-                <a href="{% url 'recipe' recipe.id %}">{{ recipe.title }}</a>
-            </h2>
-            <h3>By {{ recipe.author }}</h3>
-            <img src="{{ recipe.photo.url }}" alt="{{ recipe.title }}">
-            <p>{{ recipe.description }}</p>
-            <p>Ingredients: {{ recipe.ingredients }}</p>
-            <p>Comments: {{ recipe.comment_count }}</p>
-            <button class="like-button button">Like</button>
-            <p>Likes: {{ recipe.like_count }}</p>
-        </div>
+    <h2>Search results for {{ query }}</h2>
+    {% for recipe in recipes %}
+        {% include "recipe_card.html" %}
     {% empty %}
         <p>No posts yet.</p>
     {% endfor %}

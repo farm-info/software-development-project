@@ -1,0 +1,37 @@
+{% load static %}
+{% block recipe_card %}
+    <article class="recipe-card">
+        <h2>
+            <a href="{% url 'recipe' recipe.id %}">{{ recipe.title }}</a>
+            {% if recipe.is_verified %}
+                <img src="{% static "verification.svg" %}" class="icon" alt="verified">
+            {% endif %}
+        </h2>
+        <h3>By {{ recipe.author }}</h3>
+
+        {% if recipe.photo %}
+            <img src="{{ recipe.photo.url }}"
+                 alt="{{ recipe.title }}"
+                 width="300"
+                 height="200">
+        {% else %}
+            <p class="no-photo-avaliable">No photo available</p>
+        {% endif %}
+
+        <p>{{ recipe.description }}</p>
+        <p>Ingredients: {{ recipe.ingredients }}</p>
+        <p>Steps: {{ recipe.steps }}</p>
+        <p>Comments: {{ recipe.comments.all.count }}</p>
+
+        <form action="{% url 'like_recipe' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+            {% if recipe.has_liked %}
+                <button class="like-button button">Unlike</button>
+            {% else %}
+                <button class="like-button button">Like</button>
+            {% endif %}
+            <span>{{ recipe.likes.all.count }}</span>
+        </form>
+    </article>
+{% endblock recipe_card %}

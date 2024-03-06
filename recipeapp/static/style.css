@@ -160,6 +160,15 @@ footer {
 
 .recipe-card p {
     font-size: 14px;
+    max-height: 5rem;
+
+    overflow: clip;
+
+    background: linear-gradient(to bottom, var(--text) 70%, var(--background-content) 100%);
+    background-size: auto 5rem;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
 }
 
 .recipe-card img {
@@ -180,6 +189,7 @@ footer {
 }
 
 .no-photo-avaliable {
+    font-size: 14px;
     background-color: #c2c2c2;
     color: #3f3f3f;
     text-align: center;

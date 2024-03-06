@@ -23,12 +23,15 @@ class Recipe(models.Model):
     steps = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
 
+    # getters
     def get_ingredients_lines(self):
         return self.ingredients.splitlines() if self.ingredients else []
 
     def get_steps_lines(self):
         return self.steps.splitlines() if self.steps else []
 
+
+    # constrains
     class Meta:
         constraints = [
             models.CheckConstraint(

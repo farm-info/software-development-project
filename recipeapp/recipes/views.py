@@ -7,13 +7,15 @@ from .forms import RecipeForm
 
 
 def home(request):
-    # TODO actual algorithm
-    # placeholder
-    if request.user.is_authenticated:
-        likes = Like.objects.filter(user=request.user, recipe=OuterRef("pk"))
-        recipes = Recipe.objects.all().annotate(has_liked=Exists(likes))
-    else:
-        recipes = Recipe.objects.all().annotate(has_liked=Value(False))
+    user = request.user
+    if user.is_authenticated:
+        likes = Like.objects.filter(user=user)
+        if likes.exists():
+            likes = Like.objects.filter(user=user, recipe=OuterRef("pk"))
+            recipes = user.get_personalized_feed().annotate(has_liked=Exists(likes))
+            return render(request, "home.html", {"recipes": recipes})
+
+    recipes = Recipe.objects.all().order_by("?").annotate(has_liked=Value(False))
     return render(request, "home.html", {"recipes": recipes})
 
 

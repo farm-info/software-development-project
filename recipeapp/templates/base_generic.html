@@ -37,6 +37,24 @@
                 <div class="spacer"></div>
 
                 <li>
+                    <form action="{% url 'search' %}" method="get">
+                        <input type="text"
+                               name="query"
+                               id="search-input"
+                               placeholder="Search..."
+                               {% if query %}value="{{ query }}"{% endif %}>
+                        <button type="submit" id="search-button" disabled>Search</button>
+                        <script>
+                            const searchInput = document.getElementById('search-input');
+                            const searchButton = document.getElementById('search-button');
+                            searchInput.addEventListener('input', function() {
+                                searchButton.disabled = searchInput.value.trim() === '';
+                            });
+                        </script>
+                    </form>
+                </li>
+
+                <li>
                     <a href="{% url 'upload_recipe' %}">Upload</a>
                 </li>
 

@@ -43,8 +43,7 @@
                 {% if user.is_authenticated %}
                     <li>
                         <a href="{% url 'notifications' %}">Notifications
-                            &nbsp;
-                            {% if notifications %}<span class="badge"></span>{% endif %}
+                            {% if notifications %}&nbsp;<span class="badge"></span>{% endif %}
                         </a>
                     </li>
 

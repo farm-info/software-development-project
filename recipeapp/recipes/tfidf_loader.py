@@ -26,7 +26,12 @@ class TfidfLoader:
             print("Processing existing data...")
             self.reprocess()
 
+    def check_initialized(self):
+        if self.tfidf_matrix is None:
+            raise ValueError("TfidfLoader not initialized")
+
     def reprocess(self):
+        self.check_initialized()
         from .models import Recipe
 
         recipes = Recipe.objects.all()
@@ -39,6 +44,7 @@ class TfidfLoader:
         self.dump_vectorizer_and_matrix()
 
     def dump_vectorizer_and_matrix(self):
+        self.check_initialized()
         joblib.dump(self.tfidf_vectorizer, "tfidf_vectorizer.joblib")
         joblib.dump(self.tfidf_matrix, "tfidf_matrix.joblib")
 

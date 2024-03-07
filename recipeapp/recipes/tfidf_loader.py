@@ -17,7 +17,9 @@ class TfidfLoader:
             self.tfidf_vectorizer = TfidfVectorizer(stop_words="english")
         self.tfidf_matrix = None
 
-    def initialize(self):
+    # WONTFIX lack of type checking
+    def initialize(self, model):
+        self.model = model
         if os.path.exists("tfidf_matrix.joblib"):
             print("Existing processed data detected...")
             self.tfidf_matrix = joblib.load("tfidf_matrix.joblib")
@@ -27,15 +29,24 @@ class TfidfLoader:
             self.reprocess()
 
     def check_initialized(self):
-        if self.tfidf_matrix is None:
+        if (self.tfidf_matrix is None) or (self.model is None):
             raise ValueError("TfidfLoader not initialized")
+
+    def dump_vectorizer_and_matrix(self):
+        self.check_initialized()
+        joblib.dump(self.tfidf_vectorizer, "tfidf_vectorizer.joblib")
+        joblib.dump(self.tfidf_matrix, "tfidf_matrix.joblib")
 
     def reprocess(self):
         self.check_initialized()
-        from .models import Recipe
 
-        recipes = Recipe.objects.all()
-        combined = [recipe.get_combined_text() for recipe in recipes]
+        all_objects = self.model.objects.all()
+
+        try:
+            combined = [object.get_combined_text() for object in all_objects]  # type: ignore
+        except AttributeError:
+            raise ValueError("Model does not have get_combined_text method")
+
         try:
             self.tfidf_matrix = self.tfidf_vectorizer.fit_transform(combined)
         except ValueError:

@@ -1,4 +1,4 @@
-from django.apps import AppConfig
+from django.apps import AppConfig, apps
 from .tfidf_loader import TfidfLoaderSingleton
 
 
@@ -8,5 +8,6 @@ class RecipesConfig(AppConfig):
 
     def ready(self):
         loader = TfidfLoaderSingleton.get_instance()
-        loader.initialize()
+        recipe_model = apps.get_model("recipes", "Recipe")
+        loader.initialize(recipe_model)
         print("TfidfLoader initialized!")

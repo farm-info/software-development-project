@@ -2,7 +2,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 from django.apps import apps
-from sklearn.metrics.pairwise import cosine_similarity
 from recipes.tfidf_loader import TfidfLoaderSingleton
 
 from datetime import date
@@ -37,21 +36,9 @@ class User(AbstractUser):
         else:
             return None
 
-    def generate_user_tfidf_vector(self):
+    def get_personalized_feed(self, n=10):
         liked_recipe_text = [
             like.recipe.get_combined_text() for like in self.likes.all()  # type: ignore
         ]
-        tfidf_vectorizer = TfidfLoaderSingleton.get_instance().tfidf_vectorizer
-        user_tfidf_vector = tfidf_vectorizer.transform(liked_recipe_text)
-        return user_tfidf_vector
-
-    def get_personalized_feed(self, n=10):
-        user_tfidf_vector = self.generate_user_tfidf_vector()
-        tfidf_matrix = TfidfLoaderSingleton.get_instance().tfidf_matrix
-        similarities = cosine_similarity(user_tfidf_vector, tfidf_matrix)  # type: ignore
-
-        sorted_indices = similarities.argsort()[0][::-1]
-        recipes = apps.get_model("recipes", "Recipe")
-        recommended_ids = [idx for idx in sorted_indices[:n]]
-        recommended_recipes = recipes.objects.filter(id__in=recommended_ids)
-        return recommended_recipes
+        liked_recipe_text = " ".join(liked_recipe_text)
+        return TfidfLoaderSingleton.get_instance().search_item(liked_recipe_text, n)  # type: ignore

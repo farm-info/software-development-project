@@ -20,10 +20,10 @@ def home(request):
 
 
 def search(request):
-    # TODO actual algorithm
-    # placeholder
-    results = Recipe.objects.all()
-    return render(request, "search.html", {"results": results})
+    query = request.GET.get("query")
+    if not query:
+        return redirect("home")
+
 
 
 def recipe(request, recipe_id):

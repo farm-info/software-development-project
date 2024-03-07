@@ -2,8 +2,12 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Exists, OuterRef, Value, Q
 from django.http import HttpResponseBadRequest
+from sklearn.metrics.pairwise import cosine_similarity
+from .tfidf_loader import TfidfLoaderSingleton
 from .models import Recipe, Like, Comment
 from .forms import RecipeForm
+
+tfidf_loader = TfidfLoaderSingleton.get_instance()
 
 
 def home(request):
@@ -24,6 +28,8 @@ def search(request):
     if not query:
         return redirect("home")
 
+    results = tfidf_loader.search_item(query)
+    return render(request, "search.html", {"recipes": results, "query": query})
 
 
 def recipe(request, recipe_id):

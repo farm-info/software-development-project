@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+from .tfidf_loader import TfidfLoaderSingleton
+
 
 User = settings.AUTH_USER_MODEL
 
@@ -30,6 +32,31 @@ class Recipe(models.Model):
     def get_steps_lines(self):
         return self.steps.splitlines() if self.steps else []
 
+    def get_combined_text(self) -> str:
+        return " ".join(
+            [
+                str(field)
+                for field in [
+                    self.title,
+                    self.description,
+                    self.ingredients,
+                    self.steps,
+                ]
+                if field is not None
+            ]
+        )
+
+    # recommendation system
+    def save(self, *args, **kwargs):
+        # retrains the entire database. not ideal, but the best we can do for now
+        TfidfLoaderSingleton.get_instance().reprocess()
+        return super().save(*args, **kwargs)
+
+    # TODO test
+    # TODO filter out liked recipes
+    def recommend_similar_recipes(self, n: int = 10) -> "models.QuerySet[Recipe]":
+        recipe_text = self.get_combined_text()
+        return TfidfLoaderSingleton.get_instance().search_item(recipe_text, n)
 
     # constrains
     class Meta:

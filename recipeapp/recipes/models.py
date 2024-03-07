@@ -21,8 +21,8 @@ class Recipe(models.Model):
         verbose_name="Time to cook",
         help_text="in minutes",
     )
-    ingredients = models.TextField()
-    steps = models.TextField()
+    ingredients = models.TextField(help_text="One ingredient per line")
+    steps = models.TextField(help_text="One step per line")
     created_date = models.DateTimeField(auto_now_add=True)
 
     # getters

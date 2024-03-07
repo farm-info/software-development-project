@@ -43,14 +43,7 @@
                                id="search-input"
                                placeholder="Search..."
                                {% if query %}value="{{ query }}"{% endif %}>
-                        <button type="submit" id="search-button" disabled>Search</button>
-                        <script>
-                            const searchInput = document.getElementById('search-input');
-                            const searchButton = document.getElementById('search-button');
-                            searchInput.addEventListener('input', function() {
-                                searchButton.disabled = searchInput.value.trim() === '';
-                            });
-                        </script>
+                        <button type="submit" id="search-button">Search</button>
                     </form>
                 </li>
 

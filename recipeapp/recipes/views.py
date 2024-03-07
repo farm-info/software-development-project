@@ -62,6 +62,8 @@ def add_comment(request):
     )
     text = request.POST["text"]
     rating = request.POST["rating"]
+    if not rating:
+        rating = None
 
     comment = Comment(
         author=author,

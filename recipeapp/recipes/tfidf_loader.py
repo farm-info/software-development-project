@@ -1,8 +1,7 @@
 import os
 
 from sklearn.feature_extraction.text import TfidfVectorizer
-import scipy.sparse as sp
-import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
 import joblib
 
 
@@ -54,17 +53,12 @@ class TfidfLoader:
 
         self.dump_vectorizer_and_matrix()
 
-    def dump_vectorizer_and_matrix(self):
-        self.check_initialized()
-        joblib.dump(self.tfidf_vectorizer, "tfidf_vectorizer.joblib")
-        joblib.dump(self.tfidf_matrix, "tfidf_matrix.joblib")
+    def search_item(self, query: str, n: int = 10):
+        tfidf_vector = self.tfidf_vectorizer.transform([query])
 
-    # TODO fix
-    def add_tfidf_vector_to_matrix(self, tfidf_vector):
-        vector_array = tfidf_vector.toarray().flatten()
-        new_row = np.array(vector_array).reshape(1, -1)
-        self.tfidf_matrix = sp.vstack([self.tfidf_matrix, new_row])
-        self.dump_vectorizer_and_matrix()
+        similarities = cosine_similarity(tfidf_vector, self.tfidf_matrix)
+        sorted_indices = similarities.argsort()[0][::-1]
+        return self.model.objects.filter(id__in=sorted_indices[:n])
 
 
 class TfidfLoaderSingleton:

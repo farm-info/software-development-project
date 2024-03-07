@@ -60,8 +60,8 @@ def add_comment(request):
     parent_comment = (
         Comment.objects.get(id=parent_comment_id) if parent_comment_id else None
     )
-    text = request.POST["text"]
-    rating = request.POST["rating"]
+    text = request.POST.get("text")
+    rating = request.POST.get("rating")
     if not rating:
         rating = None
 

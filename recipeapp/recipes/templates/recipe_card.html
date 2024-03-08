@@ -4,7 +4,17 @@
         <h2>
             <a href="{% url 'recipe' recipe.id %}">{{ recipe.title }}</a>
             {% if recipe.is_verified %}
-                <img src="{% static "verification.svg" %}" class="icon" alt="verified">
+                &nbsp;
+                <img src="{% static "verification.svg" %}"
+                     class="icon"
+                     alt="verified"
+                     title="verified">
+            {% endif %}
+            {% if recipe.is_imported_recipe %}
+                <img src="{% static "imported_recipe.svg" %}"
+                     class="icon"
+                     alt="imported from other sites"
+                     title="imported from other sites">
             {% endif %}
         </h2>
         <h3>By {{ recipe.author }}</h3>

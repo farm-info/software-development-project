@@ -13,6 +13,11 @@
             {% if recipe.is_verified %}
                 <img src="{% static "verification.svg" %}" class="icon" alt="verified">
             {% endif %}
+            {% if recipe.is_imported_recipe %}
+                <img src="{% static "imported_recipe.svg" %}"
+                     class="icon"
+                     alt="imported from other sites">
+            {% endif %}
         </h1>
         <p>
             <b>By</b> {{ recipe.author }}

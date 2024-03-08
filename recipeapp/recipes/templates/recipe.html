@@ -33,7 +33,7 @@
             <br>
         </form>
 
-        <div class="recipe-management">
+        <div class="recipe-actions">
             {% if request.user == recipe.author %}
                 <button class="edit-button button"
                         onclick="window.location.href='{% url 'edit_recipe' recipe.id %}'">Edit</button>

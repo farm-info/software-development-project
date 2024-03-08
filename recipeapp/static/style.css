@@ -174,17 +174,13 @@ footer {
 .recipe-card img {
     max-width: 100%;
     aspect-ratio: 1;
-}
-
-.recipe img,
-.recipe-card img {
     height: auto;
     object-fit: cover;
 }
 
 .no-photo-avaliable,
-.recipe img,
-.recipe-card img {
+.recipe>img,
+.recipe-card>img {
     border-radius: 10px;
 }
 
@@ -203,8 +199,8 @@ footer {
 }
 
 .icon {
-    width: 1em;
-    height: 1em;
+    width: 0.7em;
+    height: auto;
     vertical-align: -0.125em;
 }
 

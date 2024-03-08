@@ -171,10 +171,11 @@ footer {
     -webkit-background-clip: text;
 }
 
-.recipe-card img {
-    max-width: 100%;
-    aspect-ratio: 1;
+.recipe-card>img {
+    width: 100%;
     height: auto;
+    min-height: 300px;
+    max-height: 16em;
     object-fit: cover;
 }
 

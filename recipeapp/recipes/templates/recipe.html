@@ -21,19 +21,19 @@
             <b>Uploaded on</b> {{ recipe.created_date|date:"F j, Y" }}
         </p>
 
-        <form action="{% url 'like_recipe' %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
-            {% if recipe.has_liked %}
-                <button class="like-button button">Unlike</button>
-            {% else %}
-                <button class="like-button button">Like</button>
-            {% endif %}
-            <span>{{ recipe.likes.all.count }}</span>
-            <br>
-        </form>
-
         <div class="recipe-actions">
+            <form action="{% url 'like_recipe' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+                {% if recipe.has_liked %}
+                    <button class="like-button button">Unlike</button>
+                {% else %}
+                    <button class="like-button button">Like</button>
+                {% endif %}
+                <span>{{ recipe.likes.all.count }}</span>
+                <br>
+            </form>
+
             {% if request.user == recipe.author %}
                 <button class="edit-button button"
                         onclick="window.location.href='{% url 'edit_recipe' recipe.id %}'">Edit</button>

@@ -24,7 +24,7 @@ class TfidfLoader:
             self.tfidf_matrix = joblib.load("tfidf_matrix.joblib")
 
         else:
-            print("Processing existing data...")
+            print("Processing all existing data...")
             self.reprocess()
 
     def check_initialized(self):
@@ -35,6 +35,7 @@ class TfidfLoader:
         self.check_initialized()
         joblib.dump(self.tfidf_vectorizer, "tfidf_vectorizer.joblib")
         joblib.dump(self.tfidf_matrix, "tfidf_matrix.joblib")
+        joblib.dump(self.index_to_id, "index_to_id.joblib")
 
     def reprocess(self):
         all_objects = self.model.objects.all().order_by("id")

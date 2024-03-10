@@ -72,10 +72,7 @@
         </div>
 
         {% if recipe.photo %}
-            <img src="{{ recipe.photo.url }}"
-                 alt="{{ recipe.title }}"
-                 width="300"
-                 height="200">
+            <img src="{{ recipe.photo.url }}" alt="{{ recipe.title }}">
         {% else %}
             <div class="no-photo-avaliable">No photo available</div>
         {% endif %}

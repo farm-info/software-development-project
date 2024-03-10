@@ -22,6 +22,7 @@ class TfidfLoader:
         if os.path.exists("tfidf_matrix.joblib"):
             print("Existing processed data detected...")
             self.tfidf_matrix = joblib.load("tfidf_matrix.joblib")
+            self.index_to_id = joblib.load("index_to_id.joblib")
 
         else:
             print("Processing all existing data...")

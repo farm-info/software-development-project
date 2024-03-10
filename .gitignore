@@ -170,6 +170,7 @@ algorithms-test/results/
 # dumped algorithm processed data
 tfidf_vectorizer.joblib
 tfidf_matrix.joblib
+index_to_id.joblib
 
 # media
 recipeapp/media/

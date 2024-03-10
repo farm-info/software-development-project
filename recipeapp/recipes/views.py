@@ -6,8 +6,6 @@ from .tfidf_loader import TfidfLoaderSingleton
 from .models import Recipe, Like, Comment
 from .forms import RecipeForm
 
-tfidf_loader = TfidfLoaderSingleton.get_instance()
-
 
 def home(request):
     user = request.user
@@ -27,7 +25,11 @@ def search(request):
     if not query:
         return redirect("home")
 
-    results = tfidf_loader.search_item(query)
+    results = (
+        TfidfLoaderSingleton.get_instance()
+        .search_item(query)
+        .filter(ingredients__icontains=query)
+    )
     return render(request, "search.html", {"recipes": results, "query": query})
 
 

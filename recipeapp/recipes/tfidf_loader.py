@@ -6,7 +6,7 @@ import joblib
 
 
 class TfidfLoader:
-    # WONTFIX it doesn't ensure that it's initialized, it sucks. i'm sorry.
+    # WONTFIX it sucks. i'm sorry.
     # use `type: ignore` to suppress the errors
     def __init__(self):
         if os.path.exists("tfidf_vectorizer.joblib"):

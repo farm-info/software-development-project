@@ -166,6 +166,8 @@ cython_debug/
 # algorithm dataset and results
 algorithms/datasets/
 algorithms/results/
+tfidf_vectorizer.joblib
+tfidf_matrix.joblib
 
 # media
 recipeapp/media/

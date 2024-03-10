@@ -2,26 +2,34 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Exists, OuterRef, Value, Q
 from django.http import HttpResponseBadRequest
+from sklearn.metrics.pairwise import cosine_similarity
+from .tfidf_loader import TfidfLoaderSingleton
 from .models import Recipe, Like, Comment
 from .forms import RecipeForm
 
+tfidf_loader = TfidfLoaderSingleton.get_instance()
+
 
 def home(request):
-    # TODO actual algorithm
-    # placeholder
-    if request.user.is_authenticated:
-        likes = Like.objects.filter(user=request.user, recipe=OuterRef("pk"))
-        recipes = Recipe.objects.all().annotate(has_liked=Exists(likes))
-    else:
-        recipes = Recipe.objects.all().annotate(has_liked=Value(False))
+    user = request.user
+    if user.is_authenticated:
+        likes = Like.objects.filter(user=user)
+        if likes.exists():
+            likes = Like.objects.filter(user=user, recipe=OuterRef("pk"))
+            recipes = user.get_personalized_feed().annotate(has_liked=Exists(likes))
+            return render(request, "home.html", {"recipes": recipes})
+
+    recipes = Recipe.objects.all().order_by("?").annotate(has_liked=Value(False))
     return render(request, "home.html", {"recipes": recipes})
 
 
 def search(request):
-    # TODO actual algorithm
-    # placeholder
-    results = Recipe.objects.all()
-    return render(request, "search.html", {"results": results})
+    query = request.GET.get("query")
+    if not query:
+        return redirect("home")
+
+    results = tfidf_loader.search_item(query)
+    return render(request, "search.html", {"recipes": results, "query": query})
 
 
 def recipe(request, recipe_id):
@@ -52,8 +60,10 @@ def add_comment(request):
     parent_comment = (
         Comment.objects.get(id=parent_comment_id) if parent_comment_id else None
     )
-    text = request.POST["text"]
-    rating = request.POST["rating"]
+    text = request.POST.get("text")
+    rating = request.POST.get("rating")
+    if not rating:
+        rating = None
 
     comment = Comment(
         author=author,

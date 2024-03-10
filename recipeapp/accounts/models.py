@@ -1,6 +1,9 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from django.apps import apps
+from recipes.tfidf_loader import TfidfLoaderSingleton
+
 from datetime import date
 
 
@@ -32,3 +35,10 @@ class User(AbstractUser):
             return date.today().year - self.date_of_birth.year
         else:
             return None
+
+    def get_personalized_feed(self, n=10):
+        liked_recipe_text = [
+            like.recipe.get_combined_text() for like in self.likes.all()  # type: ignore
+        ]
+        liked_recipe_text = " ".join(liked_recipe_text)
+        return TfidfLoaderSingleton.get_instance().search_item(liked_recipe_text, n)  # type: ignore

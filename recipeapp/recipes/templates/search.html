@@ -1,12 +1,77 @@
 {% extends "base_generic.html" %}
 
 {% block title %}
-    {{ query }} | search
+    {{ query|default_if_none:"" }} | search
 {% endblock title %}
 
 {% block content %}
 
-    <h2>Search results for {{ query }}</h2>
+    <h2>Search results for "{{ query|default_if_none:"" }}"</h2>
+
+    <details>
+        <summary>Advanced search</summary>
+        <form method="get" action="{% url 'search' %}">
+            <table>
+                <tr>
+                    <th>
+                        <label for="query">Default search:</label>
+                    </th>
+                    <td>
+                        <input type="text" name="query" value="{{ query|default_if_none:"" }}">
+                        <br>
+                        <span class="helptext">Searches the title, description, ingredient, and steps; and ranks them</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="title">Exact search in title:</label>
+                    </th>
+                    <td>
+                        <input type="text" name="title" value="{{ title|default_if_none:"" }}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="description">Exact search in description:</label>
+                    </th>
+                    <td>
+                        <input type="text"
+                               name="description"
+                               value="{{ description|default_if_none:"" }}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="ingredients">Exact search in ingredients:</label>
+                    </th>
+                    <td>
+                        <input type="text"
+                               name="ingredients"
+                               value="{{ ingredients|default_if_none:"" }}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="steps">Exact search in steps:</label>
+                    </th>
+                    <td>
+                        <input type="text" name="steps" value="{{ steps|default_if_none:"" }}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="author">Exact search in author:</label>
+                    </th>
+                    <td>
+                        <input type="text" name="author" value="{{ author|default_if_none:"" }}">
+                    </td>
+                </tr>
+            </table>
+            <button type="submit">Search</button>
+        </form>
+    </details>
+    <br>
+
     {% for recipe in recipes %}
         {% include "recipe_card.html" %}
     {% empty %}

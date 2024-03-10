@@ -21,16 +21,42 @@ def home(request):
 
 
 def search(request):
-    query = request.GET.get("query")
-    if not query:
+    if not any(request.GET.values()):
         return redirect("home")
 
-    results = (
-        TfidfLoaderSingleton.get_instance()
-        .search_item(query)
-        .filter(ingredients__icontains=query)
+    query = request.GET.get("query")
+    title = request.GET.get("title")
+    description = request.GET.get("description")
+    ingredients = request.GET.get("ingredients")
+    steps = request.GET.get("steps")
+    author = request.GET.get("author")
+
+    results = TfidfLoaderSingleton.get_instance().search_item(query)
+    if title:
+        results = results.filter(title__icontains=title)
+    if description:
+        results = results.filter(description__icontains=description)
+    if ingredients:
+        results = results.filter(ingredients__icontains=ingredients)
+    if steps:
+        results = results.filter(steps__icontains=steps)
+    # TODO
+    if author:
+        results = results.filter(author__icontains=author)
+
+    return render(
+        request,
+        "search.html",
+        {
+            "recipes": results,
+            "query": query,
+            "title": title,
+            "description": description,
+            "ingredients": ingredients,
+            "steps": steps,
+            "author": author,
+        },
     )
-    return render(request, "search.html", {"recipes": results, "query": query})
 
 
 def recipe(request, recipe_id):

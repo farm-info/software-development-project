@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Exists, OuterRef, Value, Q
 from django.http import HttpResponseBadRequest
-from sklearn.metrics.pairwise import cosine_similarity
 from .tfidf_loader import TfidfLoaderSingleton
 from .models import Recipe, Like, Comment
 from .forms import RecipeForm

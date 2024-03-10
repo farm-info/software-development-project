@@ -100,11 +100,14 @@ def your_view(request):
 def admin_register(request):
     if request.method == "POST":
         action = request.POST.get("action")
-        if action == "admin_profile":
-            return redirect("admin_register")
+        if action == "admin_register":
+            form = FullUserCreationForm(request.POST)
+            if form.is_valid():
+                user = form.save()
+                login(request, user)
+                return redirect("profile")
         else:
             return redirect("your_previous_page")
     else:
-        context = {}
-        return render(request, "your_form_template.html", context)
-
+        form = FullUserCreationForm()
+    return render(request, "admin_register.html", {"form": form})

@@ -6,6 +6,8 @@ from .tfidf_loader import TfidfLoaderSingleton
 from .models import Recipe, Like, Comment
 from .forms import RecipeForm
 
+tfidf_loader = TfidfLoaderSingleton.get_instance()
+
 
 def home(request):
     user = request.user

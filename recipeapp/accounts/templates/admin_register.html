@@ -1,16 +1,13 @@
 {% extends "base_generic.html" %}
 
 {% block title %}
-    admin_register
+    register
 {% endblock title %}
 
 {% block content %}
 
     <h2>Admin Register</h2>
 
-    {% if user.is_superuser %}
-    <p>You are already an admin.</p>
-    {% else %}
 
     <form method="post" action="{% url 'register' %}">
         {% csrf_token %}
@@ -19,5 +16,5 @@
         </table>
         <button type="submit">Register</button>
     </form>
-    {% endif %}
+    
 {% endblock content %}

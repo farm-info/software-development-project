@@ -226,10 +226,6 @@ footer {
 }
 
 /* forms */
-form table {
-    margin-bottom: 1em;
-}
-
 form th,
 form td {
     padding-bottom: 1em;

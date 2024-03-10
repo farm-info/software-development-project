@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import admin_profile, admin_register 
+from .views import admin_profile, admin_register
 from . import views
 
 urlpatterns = [

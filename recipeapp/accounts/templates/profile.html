@@ -30,4 +30,21 @@
         </li>
     </ul>
 
+    {% if user.is_superuser %}
+            
+            <li>
+                <button>
+                    <a target="_blank" href="{% url 'admin:index' %}">Admin Site</a>
+                </button>
+            </li>
+
+            <li>
+                <button>
+                    <a href="{% url 'admin_register' %}">Register a new admin</a>
+                </button>
+            </li>
+
+            {% endif %}
+        </ul>
+
 {% endblock content %}

@@ -31,7 +31,7 @@ class TfidfLoader:
         if (self.tfidf_matrix is None) or (self.model is None):
             raise ValueError("TfidfLoader not initialized")
 
-    def dump_vectorizer_and_matrix(self):
+    def dump_data(self):
         self.check_initialized()
         joblib.dump(self.tfidf_vectorizer, "tfidf_vectorizer.joblib")
         joblib.dump(self.tfidf_matrix, "tfidf_matrix.joblib")
@@ -50,7 +50,7 @@ class TfidfLoader:
         except ValueError:
             print("No vocab to process")
 
-        self.dump_vectorizer_and_matrix()
+        self.dump_data()
 
     def search_item(self, query: str, n: int = 10):
         tfidf_vector = self.tfidf_vectorizer.transform([query])

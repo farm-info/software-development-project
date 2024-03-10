@@ -15,6 +15,17 @@
             {{ form.as_table }}
         </table>
         <button type="submit">Register</button>
+        {% if not user.is_superuser %}
+                        <li>
+                            <a href="{% url 'profile' %}">Profile</a>
+                        </li>
+                    {% endif %}
+
+                    {% if user.is_superuser %}
+                        <li>
+                            <a href="{% url 'profile' %}">Admin Profile</a>
+                        </li>
+                    {% endif %}
     </form>
     
 {% endblock content %}

@@ -37,9 +37,8 @@ class TfidfLoader:
         joblib.dump(self.tfidf_matrix, "tfidf_matrix.joblib")
 
     def reprocess(self):
-        self.check_initialized()
-
-        all_objects = self.model.objects.all()
+        all_objects = self.model.objects.all().order_by("id")
+        self.index_to_id = [obj.id for obj in all_objects]
 
         try:
             combined = [object.get_combined_text() for object in all_objects]  # type: ignore
@@ -58,7 +57,8 @@ class TfidfLoader:
 
         similarities = cosine_similarity(tfidf_vector, self.tfidf_matrix)
         sorted_indices = similarities.argsort()[0][::-1]
-        return self.model.objects.filter(id__in=sorted_indices[:n])
+        top_n_ids = [self.index_to_id[i] for i in sorted_indices[:n]]
+        return self.model.objects.filter(id__in=top_n_ids)
 
 
 class TfidfLoaderSingleton:

@@ -40,9 +40,8 @@ def search(request):
         results = results.filter(ingredients__icontains=ingredients)
     if steps:
         results = results.filter(steps__icontains=steps)
-    # TODO
     if author:
-        results = results.filter(author__icontains=author)
+        results = results.filter(author__username__icontains=author)
 
     return render(
         request,

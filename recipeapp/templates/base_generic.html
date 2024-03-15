@@ -36,7 +36,15 @@
 
                 <div class="spacer"></div>
 
-                <li>
+                <li class="menu-toggle">
+                    <button type="button" aria-label="Toggle Navigation">
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
+                </li>
+
+                <li class="nav-item">
                     <form action="{% url 'search' %}" method="get">
                         <input type="text"
                                name="query"
@@ -47,41 +55,49 @@
                     </form>
                 </li>
 
-                <li>
+                <li class="nav-item">
                     <a href="{% url 'upload_recipe' %}">Upload</a>
                 </li>
 
                 {% if user.is_authenticated %}
-                    <li>
+                    <li class="nav-item">
                         <a href="{% url 'notifications' %}">Notifications
                             {% if notifications %}&nbsp;<span class="badge"></span>{% endif %}
                         </a>
                     </li>
 
                     {% if not user.is_superuser %}
-                        <li>
+                        <li class="nav-item">
                             <a href="{% url 'profile' %}">Profile</a>
                         </li>
                     {% endif %}
 
                     {% if user.is_superuser %}
-                        <li>
+                        <li class="nav-item">
                             <a href="{% url 'profile' %}">Admin Profile</a>
                         </li>
                     {% endif %}
 
-                    <li>
+                    <li class="nav-item">
                         <a href="{% url 'logout' %}">Logout</a>
                     </li>
 
                 {% else %}
-                    <li>
+                    <li class="nav-item">
                         <a href="{% url 'login' %}">Login</a>
                     </li>
-                    <li>
+                    <li class="nav-item">
                         <a href="{% url 'register' %}">Register</a>
                     </li>
                 {% endif %}
+
+                <script>
+                    const toggleButton = document.querySelector('.menu-toggle button');
+                    const navItems = document.querySelectorAll('.nav-item');
+                    toggleButton.addEventListener('click', () => {
+                      navItems.forEach(item => item.classList.toggle('nav-show'));
+                    });
+                </script>
             </ul>
         </nav>
 

@@ -47,7 +47,7 @@ body {
 }
 
 main {
-    max-width: 800px;
+    max-width: 500px;
     width: 100%;
     box-sizing: border-box;
     margin: 0 auto;
@@ -174,8 +174,8 @@ footer {
 .recipe-card>img {
     width: 100%;
     height: auto;
-    min-height: 300px;
-    max-height: 16em;
+    min-height: 240px;
+    max-height: 5em;
     object-fit: cover;
 }
 

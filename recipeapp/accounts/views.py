@@ -96,7 +96,6 @@ def your_view(request):
         return render(request, "your_form_template.html", context)
 
 
-# Add an additional blank line before the function definition
 def admin_register(request):
     if request.method == "POST":
         action = request.POST.get("action")

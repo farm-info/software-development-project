@@ -22,4 +22,5 @@ urlpatterns = [
         views.verify_recipe,
         name="verify_recipe",
     ),
+    path("about/", views.about, name="about"),
 ]

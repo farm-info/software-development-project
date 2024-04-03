@@ -171,3 +171,7 @@ def notifications(request):
 def mark_notifications_read(request):
     request.user.notifications.update(is_read=True)
     return redirect("notifications")
+
+
+def about(request):
+    return render(request, "about.html")

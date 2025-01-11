@@ -10,7 +10,9 @@ User = settings.AUTH_USER_MODEL
 
 class Recipe(models.Model):
     title = models.CharField(max_length=200)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True, related_name="recipes"
+    )
     is_imported_recipe = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     photo = models.ImageField(upload_to="photos/", null=True, blank=True)

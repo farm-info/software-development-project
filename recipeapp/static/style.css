@@ -71,8 +71,11 @@ a {
 
 input[type=text],
 input[type=password],
-input[type=email] {
+input[type=email],
+input[type=number],
+textarea {
     background: #dbdbdb;
+    transition: background .2s;
     padding: 3px;
     border: none;
     border-radius: 3px;
@@ -80,8 +83,10 @@ input[type=email] {
 
 input[type=text]:focus,
 input[type=password]:focus,
-input[type=email]:focus {
-    background: #ffffff;
+input[type=email]:focus,
+input[type=number]:focus,
+textarea:focus {
+    background: #e6e6e6;
     outline-offset: 0;
 }
 
@@ -325,8 +330,12 @@ form th {
     color: var(--text-light);
 }
 
-/* button */
-button {
+/* buttons */
+button,
+.button {
+    appearance: button;
+    text-decoration: none;
+
     padding: 5px;
     border-radius: 3px;
 
@@ -341,6 +350,7 @@ button {
 }
 
 button,
+.button,
 nav ul li a {
     transition: background-color 0.1s;
     transition: box-shadow 0.1s;
@@ -348,13 +358,37 @@ nav ul li a {
 }
 
 button:hover,
+.button:hover,
 nav ul li a:hover {
     background-color: var(--button-hover);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 button:active,
+.button:active,
 nav ul li a:active {
     background-color: var(--button-active);
     box-shadow: none;
+}
+
+/* profile */
+.profile>.title {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+    >h1 {
+        font-size: 2.3em;
+        margin: 0;
+    }
+
+    >img {
+        width: 3.5em;
+        height: 3.5em;
+        border-radius: 10px;
+    }
+
+    >.spacer {
+        flex-grow: 1;
+    }
 }

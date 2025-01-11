@@ -1,10 +1,15 @@
 {% extends "base_generic.html" %}
 
+{% load static %}
+
 {% block title %}
     about us
 {% endblock title %}
 
 {% block content %}
+    {% comment %} TODO optimise this LMAO {% endcomment %}
+    <img src="{% static "jimmy-dean-IanqI4W4fco-unsplash.jpg" %}" alt="food images banner" class="banner-image">
+
     <h1>About us</h1>
     <p>FoodManJones is a app for likeminded users to browse and share recipes.</p>
     <p>

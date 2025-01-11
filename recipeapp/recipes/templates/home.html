@@ -9,7 +9,7 @@
     {% for recipe in recipes %}
         {% include "recipe_card.html" %}
     {% empty %}
-        <p>No posts yet.</p>
+        <p class="no-posts">No posts yet..</p>
     {% endfor %}
 
 {% endblock content %}

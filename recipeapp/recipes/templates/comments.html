@@ -1,27 +1,29 @@
 {% comment %} to anyone using this, depth count must start from 1 due to some maths in the template {% endcomment %}
 
-{% for comment in comments %}
-    <div class="comment">
-        <div>
-            <span class="comment-author">{{ comment.author }}</span>
-            {% if comment.rating %}<span class="comment-rating">&nbsp;&nbsp; ★ {{ comment.rating }}</span>{% endif %}
-        </div>
-        <div class="comment-date">{{ comment.created_date }}</div>
-        <div class="comment-text">{{ comment.text }}</div>
-        <form action="{% url 'add_comment' %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
-            <input type="hidden" name="parent_comment_id" value="{{ comment.id }}">
-            <input type="text" name="text" placeholder="Reply to this comment" required>
-            <button type="submit">Reply</button>
-        </form>
+<section>
+    {% for comment in comments %}
+        <article class="comment">
+            <div>
+                <span class="comment-author">{{ comment.author }}</span>
+                {% if comment.rating %}<span class="comment-rating">&nbsp;&nbsp; ★ {{ comment.rating }}</span>{% endif %}
+            </div>
+            <div class="comment-date">{{ comment.created_date }}</div>
+            <div class="comment-text">{{ comment.text }}</div>
+            <form action="{% url 'add_comment' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+                <input type="hidden" name="parent_comment_id" value="{{ comment.id }}">
+                <input type="text" name="text" placeholder="Reply to this comment" required>
+                <button type="submit">Reply</button>
+            </form>
 
-        {% if depth < 4 %}
-            {% if comment.replies.all.exists %}
-                <div class="reply" style="margin-left: {% widthratio depth 1 20 %}px">
-                    {% include "comments.html" with comments=comment.replies.all depth=depth|add:"1" %}
-                </div>
+            {% if depth < 4 %}
+                {% if comment.replies.all.exists %}
+                    <div class="reply" style="margin-left: {% widthratio depth 1 20 %}px">
+                        {% include "comments.html" with comments=comment.replies.all depth=depth|add:"1" %}
+                    </div>
+                {% endif %}
             {% endif %}
-        {% endif %}
-    </div>
-{% endfor %}
+        </article>
+    {% endfor %}
+</section>

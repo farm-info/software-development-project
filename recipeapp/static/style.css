@@ -27,7 +27,6 @@
 }
 
 /* global styles */
-
 a href {
     font-family: "Oswald", sans-serif;
     font-optical-sizing: auto;
@@ -65,6 +64,33 @@ a {
     color: var(--primary-brght);
 }
 
+*:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+input[type=text],
+input[type=password],
+input[type=email] {
+    background: #dbdbdb;
+    padding: 3px;
+    border: none;
+    border-radius: 3px;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus {
+    background: #ffffff;
+    outline-offset: 0;
+}
+
+.banner-image {
+    text-align: center;
+    width: 100%;
+    border-radius: 20px;
+}
+
 /* nav */
 nav {
     background-color: var(--background-header-footer);
@@ -80,10 +106,24 @@ nav ul {
     flex-wrap: wrap;
 }
 
+nav ul .spacer {
+    margin-right: auto;
+}
+
 nav ul li {
     display: flex;
     align-items: center;
     margin-right: 10px;
+}
+
+nav ul li .logo {
+    color: var(--accent);
+    height: 1.5em;
+}
+
+nav ul li .logo img {
+    height: 100%;
+    width: auto;
 }
 
 nav ul li a {
@@ -98,18 +138,10 @@ nav ul li a {
     align-items: center;
 }
 
-nav ul .spacer {
-    margin-right: auto;
-}
-
-nav ul li .logo {
-    color: var(--accent);
-    height: 1.5em;
-}
-
-nav ul li .logo img {
-    height: 100%;
-    width: auto;
+nav ul li form {
+    padding: 5px 0;
+    display: flex;
+    gap: 5px;
 }
 
 .menu-toggle {
@@ -238,6 +270,10 @@ footer {
     color: #3f3f3f;
     text-align: center;
     padding: 20px;
+}
+
+.no-posts {
+    text-align: center;
 }
 
 /* recipe */

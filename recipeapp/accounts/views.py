@@ -3,12 +3,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from .forms import AdminProfileForm, FullUserCreationForm
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 
 
-from django.contrib.auth.forms import UserChangeForm
 from django.urls import reverse
 from .forms import EditProfileForm
+from recipes.models import Recipe, Comment
 
 
 def login_view(request):
@@ -27,7 +27,7 @@ def register_view(request):
     if request.method == "POST":
         form = FullUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            _user = form.save()
             return redirect("home")
     else:
         form = FullUserCreationForm()
@@ -51,17 +51,13 @@ def edit_profile(request):
 
         if form.is_valid():
             form.save()
-
-            return redirect(reverse("admin_profile"))
-
+            return redirect(reverse("profile"))
         else:
             return HttpResponseBadRequest("Invalid action")
 
     else:
         form = EditProfileForm(instance=request.user)
-
-        var = {"form": form}
-        return render(request, "edit_profile.html", var)
+        return render(request, "edit_profile.html", {"form": form})
 
 
 @login_required
@@ -71,29 +67,13 @@ def admin_profile(request):
 
         if form.is_valid():
             form.save()
-
-            return redirect(reverse("profile"))
-
+            return redirect(reverse("admin_profile"))
         else:
             return HttpResponseBadRequest("Invalid action")
 
     else:
         form = AdminProfileForm(instance=request.user)
-
-        var = {"form": form}
-        return render(request, "admin_profile.html", var)
-
-
-def your_view(request):
-    if request.method == "POST":
-        action = request.POST.get("action")
-        if action == "admin_profile":
-            return redirect("admin_profile")
-        else:
-            return redirect("your_previous_page")
-    else:
-        context = {}
-        return render(request, "your_form_template.html", context)
+        return render(request, "admin_profile.html", {"form": form})
 
 
 def admin_register(request):

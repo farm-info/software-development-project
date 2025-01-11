@@ -11,29 +11,7 @@
         <table>
             {{ form.as_table }}
         </table>
-
-        {% if not user.is_superuser %}
         <button type="submit">Save</button>
-        {% else %}
-        
-            <form id="save-form" method="post">
-                {% csrf_token %}
-                <button type="submit" name="action" value="save">Save</button>
-                {% if user.is_superuser %}
-                    <input type="hidden" id="admin-profile-input" name="action" value="">
-                    <button type="submit" id="admin-profile-button">Admin Profile</button>
-                {% endif %}
-            </form>
-
-            <script>
-                document.getElementById('admin-profile-button').addEventListener('click', function(event) {
-                    document.getElementById('admin-profile-input').value = 'admin_profile';
-                    document.getElementById('save-form').action = '/admin_profile/';
-                    document.getElementById('save-form').submit();
-                });
-            </script>
-        {% endif %}
-
     </form>
 
 {% endblock content %}

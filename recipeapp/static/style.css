@@ -282,25 +282,40 @@ footer {
 }
 
 /* recipe */
-.comment {
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
 .icon {
     width: 0.7em;
     height: auto;
     vertical-align: -0.125em;
 }
 
-/* unused for now */
-.comment-author {}
+
+/* comment */
+/* most are unused for now */
+.comment {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.main-comment-box,
+.add-comment {
+    display: flex;
+    gap: 5px;
+}
+
+.main-comment-box {
+    margin-bottom: 15px;
+
+    >textarea {
+        flex: 1
+    }
+}
 
 .comment-date {
     font-size: small;
     color: var(--text-light);
 }
 
+.comment-author {}
 .comment-text {}
 
 .reply {}

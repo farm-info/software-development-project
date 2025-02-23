@@ -17,6 +17,6 @@ class RecipesConfig(AppConfig):
             print(f"Failed to initialize TfidfLoader: {e}")
 
     def ready(self):
-        # TODO: kinda janky
+        # TODO kinda janky
         if "migrate" not in sys.argv:
             self.initialize_tfidf_loader()

@@ -5,6 +5,8 @@
     --background-header-footer: #003322;
     --background-body: #09251d;
     --background-content: #114131;
+    --background-content-darker: #0a3124;
+        --background-content-lighter: #17513e;
 
     --primary: #75961a;
     --primary-brght: #88aa22;
@@ -64,6 +66,9 @@ a {
     color: var(--primary-brght);
 }
 
+h3 {
+    margin: 30px 0 10px 0;
+}
 *:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
@@ -288,6 +293,43 @@ footer {
     vertical-align: -0.125em;
 }
 
+/* similar recipes */
+.similar-recipes {
+    display: flex;
+    gap: 10px;
+    height: 100px;
+
+    overflow: scroll clip;
+    scroll-snap-type: x mandatory;
+}
+
+.similar-recipes>* {
+    background: var(--background-content);
+    background-size: cover;
+    box-shadow: inset 0px -60px 40px var(--background-content);
+    transition: box-shadow 0.3s;
+
+    border-radius: 5px;
+    min-width: 120px;
+
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+
+    text-decoration: none;
+
+    scroll-snap-align: end;
+
+    &:hover {
+        box-shadow: inset 0px -70px 40px var(--background-content-darker);
+    }
+
+    &:active {
+        transition: none;
+        box-shadow: inset 0px -70px 40px var(--background-content-lighter);
+    }
+}
 
 /* comment */
 /* most are unused for now */

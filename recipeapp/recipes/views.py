@@ -63,8 +63,15 @@ def search(request):
 def recipe(request, recipe_id):
     requested_recipe = get_object_or_404(Recipe, pk=recipe_id)
     comments = Comment.objects.filter(recipe=requested_recipe, parent_comment_id=None)
+    similar_recipes = requested_recipe.recommend_similar_recipes()
     return render(
-        request, "recipe.html", {"recipe": requested_recipe, "comments": comments}
+        request,
+        "recipe.html",
+        {
+            "recipe": requested_recipe,
+            "comments": comments,
+            "similar_recipes": similar_recipes,
+        },
     )
 
 

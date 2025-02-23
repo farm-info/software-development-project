@@ -97,6 +97,20 @@
     </article>
 
     <section>
+        <h3>You might also like</h3>
+        <div class="similar-recipes">
+            {% for recipe in similar_recipes %}
+                <a href="{% url 'recipe' recipe.id %}"
+                   {% if recipe.photo %}style="background: url({{ recipe.photo.url }})"{% endif %}>
+                    {% if recipe.photo %}<img src="{{ recipe.photo.url }}" alt="{{ recipe.title }}">{% endif %}
+                    {{ recipe.title }}
+                    <span>{{ recipe.author }}</span>
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section>
         <h3>Comments ({{ recipe.comments.all.count }})</h3>
 
         <form action="{% url 'add_comment' %}"

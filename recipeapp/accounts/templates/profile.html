@@ -28,20 +28,11 @@
         <h4>Recipes</h4>
         <ul>
             {% for recipe in user.recipes.all %}
-                <a href="{% url 'recipe' recipe.id %}">{{ recipe.title }}</a>
+                <li>
+                    <a href="{% url 'recipe' recipe.id %}">{{ recipe.title }}</a>
+                </li>
             {% empty %}
                 <li>No recipes yet.</li>
-            {% endfor %}
-        </ul>
-    </section>
-
-    <section>
-        <h4>Liked Recipes</h4>
-        <ul>
-            {% for item in user.likes.all %}
-                <li>{{ item.name }}</li>
-            {% empty %}
-                <li>No previously liked recipes.</li>
             {% endfor %}
         </ul>
     </section>
@@ -53,6 +44,19 @@
                 <li>{{ comment.text }}</li>
             {% empty %}
                 <li>No comments yet.</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section>
+        <h4>Liked Recipes</h4>
+        <ul>
+            {% for like in user.likes.all %}
+                <li>
+                    <a href="{% url 'recipe' like.recipe.id %}">{{ like.recipe.title }}</a>
+                </li>
+            {% empty %}
+                <li>No previously liked recipes.</li>
             {% endfor %}
         </ul>
     </section>

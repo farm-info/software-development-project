@@ -2,9 +2,6 @@ from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from .tfidf_loader import TfidfLoaderSingleton
-
-
 User = settings.AUTH_USER_MODEL
 
 
@@ -26,6 +23,12 @@ class Recipe(models.Model):
     ingredients = models.TextField(help_text="One ingredient per line")
     steps = models.TextField(help_text="One step per line")
     created_date = models.DateTimeField(auto_now_add=True)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        from .tfidf_loader import TfidfLoaderSingleton
+
+        self.tfidf = TfidfLoaderSingleton.get_instance()
 
     # getters
     def get_ingredients_lines(self):
@@ -50,15 +53,18 @@ class Recipe(models.Model):
 
     # recommendation system
     def save(self, *args, **kwargs):
-        # retrains the entire database. not ideal, but the best we can do for now
-        TfidfLoaderSingleton.get_instance().reprocess()
-        return super().save(*args, **kwargs)
+        recipe_text = self.get_combined_text()
+        if self._state.adding:
+            self.tfidf.add_item(recipe_text, self.pk)
+        else:
+            self.tfidf.update_item(recipe_text, self.pk)
+        super().save(*args, **kwargs)
 
-    # TODO test
-    # TODO filter out liked recipes
+    # TODO use existing recipe instead of searching from the same text
     def recommend_similar_recipes(self, n: int = 10) -> "models.QuerySet[Recipe]":
         recipe_text = self.get_combined_text()
-        return TfidfLoaderSingleton.get_instance().search_item(recipe_text, n)
+        similar_recipes = self.tfidf.search_item(recipe_text, n)[1:]
+        return Recipe.objects.filter(id__in=[recipe.pk for recipe in similar_recipes])
 
     # constrains
     class Meta:

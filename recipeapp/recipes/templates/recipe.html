@@ -71,11 +71,7 @@
             {% endif %}
         </div>
 
-        {% if recipe.photo %}
-            <img src="{{ recipe.photo.url }}" alt="{{ recipe.title }}">
-        {% else %}
-            <div class="no-photo-avaliable">No photo available</div>
-        {% endif %}
+        {% if recipe.photo %}<img src="{{ recipe.photo.url }}" alt="{{ recipe.title }}">{% endif %}
 
         <p>{{ recipe.description|linebreaks }}</p>
 
